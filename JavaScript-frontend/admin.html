@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 10px;
+            text-align: center;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            background-color: blue;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!--fazer nav-->
+    <div class="container">
+
+        <header>
+            <h1>Restaurante Sabor & Clic</h1>
+            <nav>
+                <a href="">Opcao1</a>
+                <a href="">Opcao2</a>
+                <a href="">Opcao3</a>
+            </nav>
+        </header>
+        <h2>Area do administrador</h2>
+
+
+
+        <div id="administrador"></div>
+        <div class="sub-container">
+            <!-- formulario de cadastar produtos-->
+            <form action="" id="formulario_administrador">
+
+                <label for="nome_prato"> Nome do Prato</label>
+                <input type="text" name="nome_prato" id="nome_prato" required>
+
+                <label for="preco_prato">Preço</label>
+                <input type="number" step="0.01" name="preco_prato" id="preco_prato" min="0" value="0" required>
+
+                <label for="descricao_prato">Descrição do Prato</label>
+                <input type="text" name="descricao_prato" id="descricao_prato" required>
+
+                <hr>
+
+                <button type="submit">cadastrar Novo Prato</button>
+            </form>
+
+            <table class="tabelas_pratos">
+                <thead>
+                    <tr>
+                        <th> Nome</th>
+                        <th> Preço</th>
+                        <th> Descrição</th>
+                    </tr>
+                </thead>
+                <tbody id="lista_pratos">
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    </div>
+
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

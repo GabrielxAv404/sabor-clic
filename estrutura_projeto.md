@@ -1,6 +1,6 @@
 sabor-e-clic-projeto/
 │
-├── backend-flask/                # 🐍 API Back-end em Python (Padrão MVC)
+├── backend-flask/                # API Back-end em Python (Padrão MVC)
 │   ├── app/
 │   │   ├── models/
 │   │   │   └── models.py         # Entidades (Prato, Pedido, Usuario)
@@ -11,7 +11,7 @@ sabor-e-clic-projeto/
 │   ├── requirements.txt          # Dependências (Flask)
 │   └── run.py                    # Script para subir a API Flask
 │
-├── frontend-js/                  # 🟨 Front-end e Interfaces HTML
+├── frontend-js/                  # Front-end e Interfaces HTML
 │   ├── js/
 │   │   └── main.js               # Manipulação do DOM, validações e dados simulados
 │   │
