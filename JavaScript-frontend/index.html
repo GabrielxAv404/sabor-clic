@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -22,6 +22,7 @@
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         nav {
             display: flex;
             gap: 20px;
@@ -38,24 +39,20 @@
 </head>
 
 <body>
-    <!--fazer nav-->
     <div class="container">
         <header>
-            <h1>Restaurante Sabor & Clic</h1>
+            <h1>Restaurante Sabor & Click</h1>
             <nav>
-                <a href="">Opcao1</a>
-                <a href="">Opcao2</a>
-                <a href="">Opcao3</a>
+                <a href="index.html">Cardápio</a>
+                <a href="admin.html">Admin</a>
+                <a href="kds.html">Cozinha</a>
             </nav>
         </header>
         <h2>Cardápio</h2>
 
-
-
         <div id="Cardapio"></div>
         <div class="sub-container">
 
-            <!-- valor total -->
             <h2> Preço do pedido</h2>
             <div id="carrinho">
 
@@ -64,22 +61,18 @@
             </div>
             <div class="formulario">
 
-                <!-- formulario de pedido -->
-                <form action="" id="formulario_pedido">
+                <form id="formulario_pedido">
 
-                    <label for="nome_usuario">nome</label>
-                    <input type="text" name="nome_usuario" id="nome_usuario">
-
-                    <label for="num_mesa" required aria-placeholder=" EX: 1">Número da mesa</label>
-                    <input type="number" name="num_mesa" id="num_mesa" min="1" value="1">
+                    <label for="nome_usuario">Nome</label>
+                    <input type="text" name="nome_usuario" id="nome_usuario" placeholder="EX: Gabriel" required>
 
                     <hr>
                     <h2> Item pedido</h2>
-                    <label for="nome_comida" required placeholder=" EX: hot dog">Nome do Prato</label>
-                    <input type="text" name="nome_comida" id="nome_comida">
+                    <label for="nome_comida">Nome do Prato</label>
+                    <input type="text" name="nome_comida" id="nome_comida" placeholder="EX: Hot Dog" required readonly>
 
-                    <label for="quantidade" required aria-placeholder=" EX: 2">Quantidade</label>
-                    <input type="number" nome="quantidade" id="quantidade" min="1" value="1" required>
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" name="quantidade" id="quantidade" min="1" value="1" placeholder="EX: 2" required>
 
                     <hr>
 
@@ -90,6 +83,6 @@
     </div>
     <script src="js/main.js"></script>
 
-
 </body>
+
 </html>

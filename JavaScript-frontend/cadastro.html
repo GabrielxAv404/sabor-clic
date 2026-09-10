@@ -10,35 +10,103 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 800px;
-            padding: 10px;
+            width: 400px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
             text-align: center;
-            margin: 0 auto;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: blue;
+        }
+
+        label {
+            color: blue;
+            display: block;
+            margin-bottom: 5px;
         }
         
+        form {
+            width: 90%;
+            margin: auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            color: white;
+            background-color: blue;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid blue;
+        }
+
+        button:hover {
+            background-color: white;
+            color: blue;
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        h3 a {
+            text-decoration: none;
+        }
+
+        #mensagem_erro {
+            background-color: red;
+            color: black;
+            border-radius: 5px;
+
+        }
     </style>
 </head>
 <body>
-    <header>
-        
-        <h1>Tela de Cadastro</h1>
+    <div class="container">
+        <header>
+            
+            <h1>Tela de Cadastro</h1>
 
-    </header>
-    <form action="" id="CadastroForm">
+        </header>
+        <form  id="CadastroForm">
 
-    <label for="username">Usuário</label>
-    <input type="text" name="username" id="username">
+            <label for="username">Usuário</label>
+            <input type="text" name="username" id="username">
 
-    <label for="password">Senha</label>
-    <input type="password" name="password" id="password">
-    <button type="submit">Cadastrar-se</button>
+            <label for="password">Senha</label>
+            <input type="password" name="password" id="password"> 
+            <button type="submit">Cadastrar-se</button>
 
-    </form>
+        </form>
+        <div id="mensagem_erro">
+            <p></p>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
