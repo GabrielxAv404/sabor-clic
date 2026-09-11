@@ -12,3 +12,10 @@ def criar_prato():
     dados = request.get_json()
     cardapio_db.adicionar(dados)
     return jsonify({"mensagem": "Prato cadastrado com sucesso"}), 201
+
+@cardapio_blueprint.route("/api/cardapio/<int:prato_id", methods = ["DELETE"])
+def deletar_prato(prato_id):
+    sucesso, mensagem = cardapio_db.deletar(prato_id)
+    if sucesso:
+        return jsonify({"mensagem": mensagem}), 200
+    return jsonify({"erro": mensagem}), 404

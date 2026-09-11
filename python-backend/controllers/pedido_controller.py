@@ -12,3 +12,15 @@ def criar():
     dados = request.get_json()
     pedido_db.adicionar(dados)
     return jsonify({"mensagem": "Pedido criado com sucesso"}), 201
+
+@pedido_blueprint.route("/api/pedidos/<int:pedido_id>/status", methods = ["PUT"])
+def atulizar_status(pedido_id):
+    dados =request.get_json()
+
+    novo_status = dados.get("status", "pronto para entrega")
+    sucesso, mensagem = pedido_db.atulizar_status(pedido_id, novo_status)
+    
+    if sucesso:
+        return jsonify({"mensagem": mensagem})
+
+    return jsonify({"erro": mensagem})

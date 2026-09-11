@@ -12,4 +12,10 @@ class CardapioModel:
         self.cardapio.append(novo_prato)
         return novo_prato
 
+    def deletar(self, prato_id):
+        for prato in self.pratos:
+            if prato['id'] == prato_id:
+                return True, "PRato removido com sucesso!"
+        return False,"Prato não encontrado"
+
 cardapio_db = CardapioModel()

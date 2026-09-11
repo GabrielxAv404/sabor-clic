@@ -3,6 +3,7 @@ const API_URL = 'http://127.0.0.1:5000/api'
 document.addEventListener('DOMContentLoaded', async () => {
     const areacardapio = document.getElementById('Cardapio')
     const formulariopedido = document.getElementById('formulario_pedido')
+    const formulariofuncionario = document.getElementById('formulario_funcionario')
 
     if (areacardapio && formulariopedido) {
 
@@ -92,10 +93,53 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         })
     }
+    if (formulariofuncionario) {
+        formulariofuncionario.addEventListener("submit", async (Event) => {
+            Event.preventDefault()
+            const funcionario = {
+                username: document.getElementById("username").value,
+                password: document.getElementById('password').value,
+                cargo: document.getElementById('cargo').value
+            }
 
-
+            try {
+                const resposta = await fetch(`${API_URL}/admin/cadastrar-funcionario`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(funcionario)
+                })
+                const dados = await resposta.json()
+                if (resposta.ok) {
+                    alert(dados.mensagem)
+                    formulariofuncionario.reset()
+                }
+                else {
+                    alert(dados.erro || 'Erro ao cadastrar funcinário')
+                }
+            } catch (erro) {
+                console.error("erro ao cadastrar funcionario")
+            }
+        })
+    }
 })
-
+async function deletarPrato(id) {
+    if (!confirm('tem certeza que deseja enclueir este Prato')) return
+    try {
+        const resposta = await fetch(`${API_URL}/cardapio/${id}`, {
+            method: 'DELETE',
+        })
+        const dados = await resposta.json()
+        if (resposta.ok) {
+            alert(dados.mensagem)
+            location.reload()
+        }
+        else {
+            alert(dados.erro || 'Erro ao  deletar prato')
+        }
+    } catch (erro) {
+        console.error("Erro ao deletar prato", erro)
+    }
+}
 document.addEventListener('DOMContentLoaded', async () => {
     const painelCozinheiro = document.getElementById('painel_cozinheiro')
     if (painelCozinheiro) {
@@ -197,3 +241,54 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 })
+document.addEventListener('DOMContentLoaded', async () => {
+    const painelCozinheiro = document.getElementById('painel_cozinheiro')
+
+    if (painelCozinheiro) {
+        async function carregarPedidos() {
+            const resposta = await fetch(`${API_URL}/pedidos`)
+            const pedido = await resposta.json()
+
+            painelCozinheiro.innerHTML = ''
+            pedidos.forEach((pedido) => {
+                painelCozinheiro.innerHTML += `
+                <div class = "card-pedido">
+                    <h3> pedido #${pedido.id || ''} <h3>
+                    <p><strong>Cliente:</strong> ${pedido.nome_usuario}</p>
+                    <p><strong>item:</strong> ${pedido}x ${pedido.nome_comida}</p>
+                    <p><strong>Cliente:</strong> ${pedido.status || 'Pendente'}</p>
+                    
+                    <button type = "button" onlick = "marcar Como Pronto (${pedido.id})>
+                        Pronto para entregar
+                    </button>
+                </div>
+                <hr> `
+
+
+            })
+        }
+
+        carregarPedidos()
+    }
+})
+async function marcarPronto(pediddo_id) {
+    try {
+        const resposta = await fetch(`${API_URL}/pedidos/${pediddo_id}/status`, {
+            method: 'PUT',
+            headers: { 'Contennt-Type': 'application/json' },
+            body: JSON.stringify({ status: "Pronto para entregar" })
+
+        })
+        const dados = await resposta.json()
+
+        if (resposta.ok) {
+            alert(dados.mensagem)
+            locatio.reload()
+        }
+        else{
+            alert(dados.erro || 'erro ao atulizar pedido')
+        }
+    } catch(erro){
+        console.error("erro na requesição")
+    }
+}
