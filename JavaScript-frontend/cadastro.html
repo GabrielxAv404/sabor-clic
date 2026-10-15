@@ -1,112 +1,55 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de Cadastro</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 400px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            color: blue;
-        }
-
-        label {
-            color: blue;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        form {
-            width: 90%;
-            margin: auto;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            color: white;
-            background-color: blue;
-            cursor: pointer;
-            border-radius: 5px;
-            border: 1px solid blue;
-        }
-
-        button:hover {
-            background-color: white;
-            color: blue;
-        }
-
-        h3 {
-            text-align: center;
-            color: #333;
-        }
-
-        h3 a {
-            text-decoration: none;
-        }
-
-        #mensagem_erro {
-            background-color: red;
-            color: black;
-            border-radius: 5px;
-
-        }
-    </style>
+    <title>Cadastro - Sushi Zen</title>
+    <link rel="stylesheet" href="css/cadastro.css">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            
-            <h1>Tela de Cadastro</h1>
 
+    <main class="pag-cadastro">
+
+        <header class="cabecalho">
+            <img src="../imagens/logo projeto.png" alt="Logo" class="logo">
+
+            <h1>SUSHI ZEN</h1>
+
+            <p class="subtitulo">ENTREGA • EVENTOS • EXPERIÊNCIAS</p>
         </header>
-        <form  id="CadastroForm">
 
-            <label for="username">Usuário</label>
-            <input type="text" name="username" id="username">
+        <section class="container">
 
-            <label for="password">Senha</label>
-            <input type="password" name="password" id="password"> 
-            <button type="submit">Cadastrar-se</button>
+            <header class="titulo-cadastro">
+                <h2>Bem-vindo ao SZ!</h2>
+                <h3>Crie sua conta!</h3>
+            </header>
 
-        </form>
-        <div id="mensagem_erro">
-            <p></p>
-        </div>
-    </div>
+            <form action="" method="post" id="CadForm">
 
-    <script src="js/main.js"></script>
+                <label for="username">Usuário</label>
+                <input type="text" name="username" id="username" placeholder="Digite seu nome de usuário" required>
+
+                <label for="password">Senha</label>
+                <input type="password" name="password" id="password" placeholder="Digite sua senha" required>
+
+                <button type="submit">ENTRAR</button>
+
+                <div id="mensagem_erro"></div>
+
+                <div class="cadastro">
+                    <p>Já possui conta?</p>
+                    <a href="login.html">Entre agora</a>
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
 </body>
 </html>

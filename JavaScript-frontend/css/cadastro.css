@@ -1,0 +1,145 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #050505;
+    color: white;
+}
+
+.pag-cadastro {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 20px;
+    position: relative;
+    overflow: hidden;
+
+    
+}
+
+.cabecalho {
+    text-align: center;
+    margin-bottom: 32px;
+    z-index: 1;
+}
+
+.logo {
+    width: 105px;
+    height: 105px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+.cabecalho h1 {
+    margin: 0;
+    color: #D9BC78;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.subtitulo {
+    color: #D9BC78;
+    font-size: 13px;
+    letter-spacing: 4px;
+    margin: 12px 0 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 672px;
+    padding: 35px 38px;
+    background-color: #FFFFFF;
+    color: #111111;
+    border-radius: 18px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.titulo-cadastro {
+    text-align: center;
+    margin-bottom: 26px;
+}
+
+.titulo-cadastro h2 {
+    font-size: 30px;
+    margin: 0 0 10px;
+}
+
+.titulo-cadastro h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #6d6c6c
+}
+#password, #username {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 23px;
+    border: 1px solid #CCCCCC;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+#password, #username:focus {
+    border-color: #C5A45A;
+    
+}
+
+#password, #username::placeholder {
+    color: #888888;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    background-color: #D9BC78;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+}
+
+#mensagem_erro {
+    text-align: center;
+    color: red;
+    margin-top: 10px;
+}
+
+.cadastro {
+    text-align: center;
+    border-top: 1px solid #E5E5E5;
+    margin-top: 24px;
+    padding-top: 18px;
+}
+
+.cadastro p {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.cadastro a {
+    color: #946A1D;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.cadastro a:hover {
+    text-decoration: underline;
+    color: black;
+}
