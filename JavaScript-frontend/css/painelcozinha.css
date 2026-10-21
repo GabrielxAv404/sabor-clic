@@ -1,27 +1,152 @@
- body {
-     font-family: Arial, sans-serif;
-     margin: 0;
-     padding: 0;
-     background-color: #f4f4f4;
- }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ 
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: #050505;
+  color: #111;
+  padding-bottom: 96px;
+}
+ 
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: #050505;
+}
+ 
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+ 
+.logo {
+  display: block;
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+}
+ 
+.nome-marca {
+  color: #d9bc78;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+ 
+.topo h1 {
+  color: #fff;
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+ 
+.topo-info {
+  text-align: right;
+}
+ 
+.hora {
+  color: #fff;
+  font-size: 1.3rem;
+}
+ 
+.online {
+  color: #d9bc78;
+  font-size: 1.1rem;
+}
+ 
+.abas {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: #d9bc78;
+}
+ 
+.aba {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+ 
+.aba:hover {
+  background: #f1e6c6;
+}
+ 
+.aba.ativa {
+  background: #a8893f;
+  color: #fff;
+}
+ 
+.contador {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #050505;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+}
+ 
+.lista {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 28px 20px;
+}
 
- .container {
-     max-width: 800px;
-     padding: 10px;
-     text-align: center;
-     margin: 0 auto;
-     background-color: #fff;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
- }
+.menu-inferior {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 75px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  background: #050505;
+  border-top: 1px solid #222;
+  z-index: 2;
+}
 
- nav {
-     display: flex;
-     gap: 20px;
-     padding: 15px;
-     background-color: blue;
- }
+.item-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  color: #777;
+}
 
- nav a {
-     color: white;
-     text-decoration: none;
- }
+.item-menu span {
+  font-size: 28px;
+  line-height: 30px;
+}
+
+.item-menu p {
+  font-size: 14px;
+}
+
+.item-menu:hover {
+  color: #fff;
+}
+
+.item-menu.ativo {
+  color: #d9bc78;
+}

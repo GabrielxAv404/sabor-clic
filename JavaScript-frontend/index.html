@@ -1,58 +1,130 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardapio </title>
-    <link rel="stylesheet" href="css/index.css">
+    <title>ZenSushi</title>
+    <link rel="stylesheet" href="./css/index.css">
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1>Restaurante Sabor & Click</h1>
-            <nav>
-                <a href="index.html">Cardápio</a>
-                <a href="admin.html">Admin</a>
-                <a href="kds.html">Cozinha</a>
-            </nav>
+    <main class="container">
+        <header class="cabecalho">
+            <h1>Sushi<span> Zen</span></h1>
+            <p class="japones">ゼンスシ</p>
+            <div class="busca">
+                <span>⌕</span>
+                <input type="search" id="pesquisa" placeholder="Procurar Prato">
+            </div>
         </header>
-        <h2>Cardápio</h2>
 
-        <div id="Cardapio"></div>
-        <div class="sub-container">
+        <div class="conteudo">
+            <section class="destaque">
+                <img src="../imagens/prato_destaque" alt="Sushi com caviar">
+                <div class="texto-destaque">
+                    <h2>Destaque:</h2>
+                    <p>Sushi Especial com Caviar </p>
+                    <h3>- Peça agora!</h3>
+                </div>
+            </section>
 
-            <h2> Preço do pedido</h2>
-            <div id="carrinho">
+            <section class="categorias">
+                <h2>Categorias</h2>
+                <div class="lista-categorias">
+                    <a href="#barca_sushi" class="categoria"><span>🍣</span><p>Sushi<br>Sashimi</p></a>
+                    <a href="#hot_roll" class="categoria"><span>🍙</span><p>Hot Rolls</p></a>
+                    <a href="#uramaki_diversos" class="categoria"><span>🍥</span><p>Uramakis</p></a>
+                    <a href="#combo_japones" class="categoria"><span>🍱</span><p>Combos</p></a>
+                </div>
+            </section>
 
-                <p>Total: R$ <span id="valor_total">0,00</span></p>
+            <!-- SEÇÃO RESTAURADA INTEGRALMENTE -->
+            <section class="restaurantes" id="restaurantes">
+                <h2>Pedidos Populares</h2>
 
-            </div>
-            <div class="formulario">
+                <article class="card-restaurante" id="barca_sushi">
+                    <img src="../imagens/barca_sushi.jpg" alt="Barca de Sushi">
+                    <div class="informacoes-restaurante">
+                        <h3>Barca de Sushi Completa</h3>
+                        <p>4.8 ★ (1200+ avaliações) • 25-35 min • R$ 29,99</p>
+                    </div>
+                </article>
 
+                <article class="card-restaurante" id="hot_roll">
+                    <img src="../imagens/hot_roll.jpg" alt="Porção de Hot Roll Especial do Chef">
+                    <div class="informacoes-restaurante">
+                        <h3>Hot Roll Especial do Chef</h3>
+                        <p>4.7 ★ (900+ avaliações) • 30-40 min • R$ 15,00</p>
+                    </div>
+                </article>
+
+                <article class="card-restaurante" id="uramaki_diversos">
+                    <img src="../imagens/uramaki.jpg" alt="Prato de Uramakis Diversos">
+                    <div class="informacoes-restaurante">
+                        <h3>Combo Uramakis Diversos</h3>
+                        <p>4.9 ★ (800+ avaliações) • 20-30 min • R$ 20,00</p>
+                    </div>
+                </article>
+                
+                <article class="card-restaurante" id="temaki">
+                    <img src="../imagens/temaki.jpg" alt="Temaki">
+                    <div class="informacoes-restaurante">
+                        <h3>Temaki da Vó Sakura</h3>
+                        <p>4.6 ★ (700+ avaliações) • 10-25 min • R$ 12,00</p>
+                    </div>
+                </article>
+
+                <article class="card-restaurante" id="combo_japones_2p">
+                    <img src="../imagens/combo_2pessoas.jpg" alt="Combo Japonês (2 pessoas)">
+                    <div class="informacoes-restaurante">
+                        <h3>Combo Japonês (2 pessoas)</h3>
+                        <p>4.8 ★ (1200+ avaliações) • 40-55 min • R$ 120,00</p>
+                    </div>
+                </article>
+
+                <article class="card-restaurante" id="combo_japones_4p">
+                    <img src="../imagens/combo_4pessoas.jpg" alt="Combo Japonês (4 pessoas)">
+                    <div class="informacoes-restaurante">
+                        <h3>Combo Japonês (4 pessoas)</h3>
+                        <p>4.5 ★ (500+ avaliações) • 60-75 min • R$ 250,00</p>
+                    </div>
+                </article>
+            </section>
+
+            <!-- CARDÁPIO DINÂMICO QUE VEM DO BANCO DE DADOS -->
+            <section class="cardapio-dinamico" style="margin-top: 30px;">
+                <h2>Cardápio em Tempo Real</h2>
+                <div id="Cardapio">
+                    <!-- O JavaScript preencherá os pratos do banco aqui -->
+                </div>
+            </section>
+
+            <!-- FORMULÁRIO DE PEDIDO -->
+            <section class="fazer-pedido" style="margin-top: 30px; margin-bottom: 80px;">
+                <h2>Fazer Pedido</h2>
                 <form id="formulario_pedido">
+                    <label for="nome_usuario">Seu Nome:</label>
+                    <input type="text" id="nome_usuario" name="nome_usuario" required>
 
-                    <label for="nome_usuario">Nome</label>
-                    <input type="text" name="nome_usuario" id="nome_usuario" placeholder="EX: Gabriel" required>
+                    <label for="nome_comida">Prato Selecionado:</label>
+                    <input type="text" id="nome_comida" name="nome_comida" readonly required placeholder="Clique em Selecionar no Cardápio">
 
-                    <hr>
-                    <h2> Item pedido</h2>
-                    <label for="nome_comida">Nome do Prato</label>
-                    <input type="text" name="nome_comida" id="nome_comida" placeholder="EX: Hot Dog" required readonly>
+                    <label for="quantidade">Quantidade:</label>
+                    <input type="number" id="quantidade" name="quantidade" value="1" min="1" required>
 
-                    <label for="quantidade">Quantidade</label>
-                    <input type="number" name="quantidade" id="quantidade" min="1" value="1" placeholder="EX: 2" required>
-
-                    <hr>
-
-                    <button type="submit">Enviar Pedido</button>
+                    <button type="submit">Confirmar Pedido</button>
                 </form>
-            </div>
+            </section>
         </div>
-    </div>
-    <script src="js/main.js"></script>
 
+        <nav class="menu-inferior">
+            <a href="index.html" class="item-menu ativo"><span>⌂</span><p>Início</p></a>
+            <a href="rastreio.html" class="item-menu"><span>🚚</span><p>Rastreio</p></a>
+            <a href="Painelcozinha.html" class="item-menu"><span>▤</span><p>Cozinha</p></a>
+            <a href="admin.html" class="item-menu"><span>⚙</span><p>Admin</p></a>
+            <a href="login.html" class="item-menu"><span>⇥</span><p>Sair</p></a>
+        </nav>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
 </body>
-
 </html>

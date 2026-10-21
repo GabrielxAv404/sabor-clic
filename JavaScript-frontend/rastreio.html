@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acompanhar Pedido - Sabor & Clic</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <main class="container">
+        <header class="cabecalho">
+            <h1>Acompanhar <span>Pedido</span></h1>
+        </header>
+
+        <div class="conteudo" style="padding: 20px;">
+            <section class="rastreio-pedido">
+                <h2>Digite o Código do seu Pedido</h2>
+                <form id="formulario_rastreio">
+                    <input type="number" id="codigo_pedido_rastreio" placeholder="Ex: 12" required style="width: 100%; padding: 10px; margin: 10px 0;">
+                    <button type="submit" style="width: 100%; padding: 10px;">Consultar Status</button>
+                </form>
+
+                <div id="resultado_rastreio" style="margin-top: 20px;">
+                    <!-- O resultado do status do pedido será exibido aqui -->
+                </div>
+            </section>
+        </div>
+
+        <nav class="menu-inferior">
+            <a href="index.html" class="item-menu"><span>⌂</span><p>Início</p></a>
+            <a href="rastreio.html" class="item-menu ativo"><span>🚚</span><p>Rastreio</p></a>
+            <a href="Painelcozinha.html" class="item-menu"><span>▤</span><p>Cozinha</p></a>
+            <a href="admin.html" class="item-menu"><span>⚙</span><p>Admin</p></a>
+            <a href="login.html" class="item-menu"><span>⇥</span><p>Sair</p></a>
+        </nav>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

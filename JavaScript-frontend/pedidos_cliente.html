@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Pedidos - Sabor & Clic</title>
+  <link rel="stylesheet" href="./css/pedidos_cliente.css">
+</head>
+<body>
+
+  <main class="container">
+    <header class="topo">
+      <img src="../imagens/logo projeto.png" alt="Logo Sabor & Clic" class="logo">
+      <h1>Meus Pedidos</h1>
+      <p>Acompanhe aqui a situação de cada pedido em tempo real.</p>
+    </header>
+
+    <!-- Formulário de Rastreamento de Pedido -->
+    <section class="secao-rastreio" style="margin: 20px 0;">
+      <h2>Rastrear Pedido por Código</h2>
+      <form id="formulario_rastreio">
+        <label for="codigo_pedido_rastreio">Código do Pedido:</label>
+        <input type="number" id="codigo_pedido_rastreio" placeholder="Digite o código (ex: 12)" required>
+        <button type="submit">Consultar Status</button>
+      </form>
+      
+      <!-- Container onde o resultado do rastreio é exibido pelo main.js -->
+      <div id="resultado_rastreio" style="margin-top: 15px;"></div>
+    </section>
+
+    <section id="vazio" class="vazio">
+      <h2>Sua consulta aparecerá acima</h2>
+      <p>Insira o código do seu pedido para acompanhar o progresso da preparação na cozinha.</p>
+    </section>
+ 
+  </main>
+ 
+  <nav class="menu-inferior">
+    <a href="index.html" class="item-menu"><span>⌂</span><p>Início</p></a>
+    <a href="pedidos_cliente.html" class="item-menu ativo"><span>▤</span><p>Pedidos</p></a>
+    <a href="painelCozinha.html" class="item-menu"><span>🍳</span><p>Cozinha</p></a>
+    <a href="admin.html" class="item-menu"><span>⚙</span><p>Admin</p></a>
+    <a href="login.html" class="item-menu"><span>⇥</span><p>Sair</p></a>
+  </nav>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

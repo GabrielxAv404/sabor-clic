@@ -35,6 +35,7 @@ def cadastro():
         return jsonify({"mensagem": mensagem}), 201
     else:
         return jsonify({"erro": mensagem}), 400
+    
 @LoginUsuario_blueprint.route("/api/admin/cadastrar-funcionario", methods = ["POST"])
 def cadastrar_funcionario():
     dados = request.get_json()

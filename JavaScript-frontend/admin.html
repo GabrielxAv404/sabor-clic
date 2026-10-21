@@ -1,35 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
-<head>
+<head>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração</title>
-
+    <title>Administração - Sabor & Clic</title>
 </head>
 
 <body>
-    <!--fazer nav-->
     <div class="container">
-
         <header>
             <h1>Restaurante Sabor & Clic</h1>
             <nav>
-                <a href="">Opcao1</a>
-                <a href="">Opcao2</a>
-                <a href="">Opcao3</a>
+                <a href="index.html">Início</a>
+                <a href="Painelcozinha.html">Painel Cozinha</a>
+                <a href="login.html">Sair</a>
             </nav>
         </header>
-        <h2>Area do administrador</h2>
-
-
+        
+        <h2>Área do Administrador</h2>
 
         <div id="administrador"></div>
+        
         <div class="sub-container">
-            <!-- formulario de cadastar produtos-->
+            <!-- Formulário de cadastro de produtos -->
             <form action="" id="formulario_administrador">
-
-                <label for="nome_prato"> Nome do Prato</label>
+                <label for="nome_prato">Nome do Prato</label>
                 <input type="text" name="nome_prato" id="nome_prato" required>
 
                 <label for="preco_prato">Preço</label>
@@ -40,28 +36,26 @@
 
                 <hr>
 
-                <button type="submit">cadastrar Novo Prato</button>
+                <button type="submit">Cadastrar Novo Prato</button>
             </form>
 
             <table class="tabelas_pratos">
                 <thead>
                     <tr>
-                        <th> Nome</th>
-                        <th> Preço</th>
-                        <th> Descrição</th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="lista_pratos">
 
                 </tbody>
-
             </table>
         </div>
     </div>
-    </div>
 
-
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 
 </html>

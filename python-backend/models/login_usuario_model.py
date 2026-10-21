@@ -1,50 +1,53 @@
+from database import get_db_connection
+
 class Usuario:
-    def __init__(self):
-        self.usuarios = [
-            {"username": "admin", "password": "123", "cargo": "admin", "redirect": "admin.html"},
-            {"username": "cozinheiro", "password": "123", "cargo": "cozinha", "redirect": "Painelcozinha.html"},
-            {"username": "cliente", "password": "123", "cargo": "cliente", "redirect": "index.html"}]
-
-
     def autenticar_usuario(self, username, password):
-        for usuario in self.usuarios:
-            if usuario['username'] == username and usuario['password'] == password:
-                return usuario
-            
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+            SELECT id_usuario AS id, username, senha_hash, cargo
+            FROM usuario
+            WHERE username = %s
+        """, (username,))
+        usuario = cursor.fetchone()
+        conn.close()
+
+        if usuario and password in usuario['senha_hash']:
+            redirect_map = {
+                "admin": "admin.html",
+                "cozinha": "Painelcozinha.html",
+                "cliente": "index.html"
+            }
+            usuario['redirect'] = redirect_map.get(usuario['cargo'], "index.html")
+            return usuario
         return None
 
-    def cadastrar_usuario(self,username, password):
+    def cadastrar_usuario(self, username, password):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id_usuario FROM usuario WHERE username = %s", (username,))
+        if cursor.fetchone():
+            conn.close()
+            return False, "Usuário já existe"
 
-        for usuario in self.usuarios:
-            if usuario['username'] == username:
-                return False,'usuario já existe'
-
-        novo_usuario = {
-            "username": username,
-            "password": password,
-            "cargo": "cliente",
-            "redirect": "index.html"
-        }
-
-        self.usuarios.append(novo_usuario)
+        sql = "INSERT INTO usuario (username, senha_hash, cargo) VALUES (%s, %s, %s)"
+        cursor.execute(sql, (username, f"pbkdf2:sha256:1000${password}", "cliente"))
+        conn.commit()
+        conn.close()
         return True, "Cliente cadastrado com sucesso"
-    
+
     def cadastrar_funcionario(self, username, password, cargo):
-        for usuario in self.usuarios:
-            if usuario['username'] == username:
-                return False, "usuario já existe"
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id_usuario FROM usuario WHERE username = %s", (username,))
+        if cursor.fetchone():
+            conn.close()
+            return False, "Usuário já existe"
+        
+        sql = "INSERT INTO usuario (username, senha_hash, cargo) VALUES (%s, %s, %s)"
+        cursor.execute(sql, (username, f"pbkdf2:sha256:1000${password}", cargo))
+        conn.commit()
+        conn.close()
+        return True, f"Funcionário ({cargo}) cadastrado com sucesso"
 
-        redirect = {
-            "admin": "admin.html",
-            "cozinha": "Painelcozinha.html"
-        }
-        novo_funcionario = {
-            "username": username,
-            "password": password,
-            "cargo": cargo,
-            "redirect": redirect.get(cargo,"index.html")
-        }
-
-        self.usuarios.append(novo_funcionario)
-        return True, f"Funcionario ({cargo}) cadastrado com sucesso "
-Usuario_db =Usuario()
+Usuario_db = Usuario()

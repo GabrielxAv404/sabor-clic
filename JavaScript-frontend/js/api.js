@@ -1,10 +1,11 @@
 const API_URL = 'http://127.0.0.1:5000/api'
 
-export class apiServiços {
-    static async obtercardapio() {
+export class ApiService {
+    static async obterCardapio() {
         const res = await fetch(`${API_URL}/cardapio`)
         return await res.json()
     }
+
     static async criarPrato(dadosPrato) {
         return await fetch(`${API_URL}/cardapio`, {
             method: 'POST',
@@ -12,12 +13,13 @@ export class apiServiços {
             body: JSON.stringify(dadosPrato)
         })
     }
-    static async deletarprato(id) {
+
+    static async deletarPrato(id) {
         return await fetch(`${API_URL}/cardapio/${id}`, { method: 'DELETE' })
     }
 
     static async obterPedidos() {
-        const res = await fetch(`${API_URL}/pedidos)`)
+        const res = await fetch(`${API_URL}/pedidos`)
         return await res.json()
     }
 
@@ -34,7 +36,7 @@ export class apiServiços {
         return await res.json()
     }
 
-    static async obterhistorico(idCliente) {
+    static async obterHistorico(idCliente) {
         const res = await fetch(`${API_URL}/pedidos/cliente/${idCliente}`)
         return await res.json()
     }
@@ -52,7 +54,7 @@ export class apiServiços {
         })
     }
 
-    static async obteragedamento(idcozinheiro) {
+    static async obterAgendamento(idcozinheiro) {
         const res = await fetch(`${API_URL}/bancadas/agendamentos/${idcozinheiro}`)
         return await res.json()
     }
@@ -73,12 +75,11 @@ export class apiServiços {
         })
     }
 
-        static async cadastrarFuncionario(dadosfuncionario) {
+    static async cadastrarFuncionario(dadosfuncionario) {
         return await fetch(`${API_URL}/admin/cadastrar-funcionario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dadosfuncionario)
         })
     }
-
 }
