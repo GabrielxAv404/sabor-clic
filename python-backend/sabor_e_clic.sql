@@ -1,7 +1,3 @@
--- =========================================================================
--- 1. CRIAÇÃO DO BANCO DE DADOS E TABELAS
--- =========================================================================
-
 CREATE DATABASE IF NOT EXISTS dark_kitchen
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
@@ -95,11 +91,6 @@ CREATE TABLE pedido_historico (
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido) ON DELETE CASCADE
 );
 
-
--- =========================================================================
--- 2. DADOS INICIAIS
--- =========================================================================
-
 USE dark_kitchen;
 
 INSERT INTO usuario
@@ -145,11 +136,6 @@ INSERT INTO pedido
 VALUES
 ('Felipe Elias', 'Barca de Sushi Completa', 1, 'AGUARDANDO', 0, 29.99),
 ('Gabriel Santos', 'Hot Roll Especial do Chef', 2, 'EM PREPARO', 20, 30.00);
-
-
--- =========================================================================
--- 3. TRIGGERS
--- =========================================================================
 
 USE dark_kitchen;
 
@@ -301,17 +287,10 @@ END$$
 
 DELIMITER ;
 
-
--- =========================================================================
--- 4. RELATÓRIOS E CONSULTAS
--- =========================================================================
-
 USE dark_kitchen;
-
 SET @inicio = '2026-01-01 00:00:00';
 SET @fim    = '2026-12-31 23:59:59';
 
--- 1. Pratos mais vendidos.
 SELECT
     pi.id_prato,
     pi.nome_prato_snapshot AS prato,
@@ -324,15 +303,6 @@ WHERE p.data_criacao BETWEEN @inicio AND @fim
 GROUP BY pi.id_prato, pi.nome_prato_snapshot
 ORDER BY quantidade_vendida DESC;
 
--- 2. Faturamento total de pedidos prontos ou entregues.
-SELECT
-    COUNT(*) AS total_pedidos,
-    COALESCE(SUM(total), 0) AS faturamento_total
-FROM pedido
-WHERE data_criacao BETWEEN @inicio AND @fim
-  AND status IN ('PRONTO', 'ENTREGUE');
-
--- 3. Faturamento por dia.
 SELECT
     DATE(data_criacao) AS dia,
     COUNT(*) AS total_pedidos,
@@ -343,7 +313,6 @@ WHERE data_criacao BETWEEN @inicio AND @fim
 GROUP BY DATE(data_criacao)
 ORDER BY dia;
 
--- 4. Ocupacao das bancadas.
 SELECT
     b.id_bancada,
     b.identificacao,
@@ -364,7 +333,6 @@ LEFT JOIN agendamento_bancada a
 GROUP BY b.id_bancada, b.identificacao
 ORDER BY ocupacao_percentual DESC;
 
--- 5. Horarios mais reservados.
 SELECT
     HOUR(hora_inicio) AS hora,
     COUNT(*) AS quantidade_reservas
@@ -374,7 +342,6 @@ WHERE data_agendamento BETWEEN DATE(@inicio) AND DATE(@fim)
 GROUP BY HOUR(hora_inicio)
 ORDER BY quantidade_reservas DESC;
 
--- 6. Reservas por cozinheiro.
 SELECT
     u.id_usuario,
     u.nome_exibicao AS cozinheiro,
@@ -388,9 +355,7 @@ WHERE u.cargo = 'cozinha'
 GROUP BY u.id_usuario, u.nome_exibicao
 ORDER BY total_reservas DESC;
 
--- 7. Historico de um pedido (altere o ID).
 SET @id_pedido = 1;
-
 SELECT
     id_historico,
     id_pedido,
