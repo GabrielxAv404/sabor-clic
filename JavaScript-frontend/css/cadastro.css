@@ -143,3 +143,132 @@ button:hover {
     text-decoration: underline;
     color: black;
 }
+
+@media (max-width: 768px) {
+    .pag-cadastro {
+        padding: 25px 15px;
+    }
+
+    .cabecalho {
+        margin-bottom: 25px;
+    }
+
+    .logo {
+        width: 90px;
+        height: 90px;
+    }
+
+    .cabecalho h1 {
+        font-size: 30px;
+    }
+
+    .subtitulo {
+        font-size: 11px;
+        letter-spacing: 3px;
+    }
+
+    .container {
+        max-width: 550px;
+        padding: 30px 25px;
+    }
+
+    .titulo-cadastro h2 {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pag-cadastro {
+        padding: 20px 12px;
+    }
+
+    .logo {
+        width: 75px;
+        height: 75px;
+    }
+
+    .cabecalho h1 {
+        font-size: 25px;
+        letter-spacing: 2px;
+    }
+
+    .subtitulo {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .container {
+        padding: 25px 18px;
+        border-radius: 14px;
+    }
+
+    .titulo-cadastro h2 {
+        font-size: 23px;
+    }
+
+    .titulo-cadastro h3 {
+        font-size: 15px;
+    }
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="tel"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #CCCCCC;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus, 
+input[type="tel"]:focus {
+    border-color: #C5A45A;
+}
+
+input[type="text"]::placeholder, 
+input[type="email"]::placeholder, 
+input[type="password"]::placeholder, 
+input[type="tel"]::placeholder {
+    color: #888888;
+}
+
+    button {
+        padding: 14px;
+        font-size: 15px;
+    }
+
+    .cadastro p {
+        font-size: 13px;
+    }
+}
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="tel"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 23px;
+    border: 1px solid #CCCCCC;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus, 
+input[type="tel"]:focus {
+    border-color: #C5A45A;
+}
+
+input[type="text"]::placeholder, 
+input[type="email"]::placeholder, 
+input[type="password"]::placeholder, 
+input[type="tel"]::placeholder {
+    color: #888888;
+}

@@ -1,61 +1,197 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>  
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração - Sabor & Clic</title>
+    <title>Painel Administrativo | Sushi Zen</title>
+    <link rel="stylesheet" href="./css/admin.css">
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1>Restaurante Sabor & Clic</h1>
-            <nav>
-                <a href="index.html">Início</a>
-                <a href="Painelcozinha.html">Painel Cozinha</a>
-                <a href="login.html">Sair</a>
-            </nav>
-        </header>
-        
-        <h2>Área do Administrador</h2>
 
-        <div id="administrador"></div>
-        
-        <div class="sub-container">
-            <!-- Formulário de cadastro de produtos -->
-            <form action="" id="formulario_administrador">
-                <label for="nome_prato">Nome do Prato</label>
-                <input type="text" name="nome_prato" id="nome_prato" required>
+    <header class="cabecalho">
+        <a href="./admin.html" class="logo">
+            <img src="./imagens/logo projeto.png" alt="Sushi Zen">
+        </a>
 
-                <label for="preco_prato">Preço</label>
-                <input type="number" step="0.01" name="preco_prato" id="preco_prato" min="0" value="0" required>
-
-                <label for="descricao_prato">Descrição do Prato</label>
-                <input type="text" name="descricao_prato" id="descricao_prato" required>
-
-                <hr>
-
-                <button type="submit">Cadastrar Novo Prato</button>
-            </form>
-
-            <table class="tabelas_pratos">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Preço</th>
-                        <th>Descrição</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="lista_pratos">
-
-                </tbody>
-            </table>
+        <div class="usuario-admin">
+            <span>Administrador</span>
         </div>
-    </div>
+    </header>
 
-    <script type="module" src="js/main.js"></script>
+    <main class="container-admin">
+
+        <section class="titulo-pagina">
+            <h1>Painel Administrativo</h1>
+            <p>Gerencie os pedidos, pratos e funcionários do Sushi Zen.</p>
+        </section>
+
+        <section class="dashboard">
+
+            <div class="painel-grafico">
+                <div class="titulo-painel">
+                    <h2>Pedidos por semana</h2>
+                </div>
+
+                <div class="grafico">
+                    <div class="eixo-y">
+                        <span>100</span>
+                        <span>75</span>
+                        <span>50</span>
+                        <span>25</span>
+                        <span>0</span>
+                    </div>
+
+                    <div class="area-grafico">
+                        <div class="linhas-grafico">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div class="colunas-grafico">
+                            <div class="coluna-item">
+                                <div class="coluna" style="height: 45%;"></div>
+                                <span>Semana 1</span>
+                            </div>
+
+                            <div class="coluna-item">
+                                <div class="coluna" style="height: 75%;"></div>
+                                <span>Semana 2</span>
+                            </div>
+
+                            <div class="coluna-item">
+                                <div class="coluna" style="height: 60%;"></div>
+                                <span>Semana 3</span>
+                            </div>
+
+                            <div class="coluna-item">
+                                <div class="coluna" style="height: 90%;"></div>
+                                <span>Semana 4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="painel-pedidos">
+                <div class="titulo-painel">
+                    <h2>Pedidos recentes</h2>
+                </div>
+
+                <div class="tabela-container">
+                    <table class="tabela-pedidos">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Número do pedido</th>
+                                <th>Data do pedido</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Mariana Silva</td>
+                                <td>#582341</td>
+                                <td>05/11/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Pedro Santos</td>
+                                <td>#729184</td>
+                                <td>05/11/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Ana Oliveira</td>
+                                <td>#391827</td>
+                                <td>04/11/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Lucas Costa</td>
+                                <td>#846219</td>
+                                <td>04/11/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Beatriz Souza</td>
+                                <td>#193582</td>
+                                <td>03/11/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Gabriel Lima</td>
+                                <td>#625491</td>
+                                <td>02/11/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Juliana Mendes</td>
+                                <td>#418736</td>
+                                <td>01/11/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Rafael Almeida</td>
+                                <td>#937251</td>
+                                <td>31/10/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Camila Ferreira</td>
+                                <td>#284615</td>
+                                <td>30/10/2026</td>
+                            </tr>
+                            <tr>
+                                <td>Matheus Rocha</td>
+                                <td>#751923</td>
+                                <td>29/10/2026</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="gerenciamento">
+            <h2>Gerenciamento</h2>
+
+            <div class="cards-gerenciamento">
+
+                <div class="card-gerenciamento">
+                    <h3>Pratos</h3>
+                    <p>Cadastre e edite os pratos disponíveis no restaurante.</p>
+
+                    <div class="botoes-card">
+                        <a href="./arquivos_admin_html/cadastrar_prato.html" class="botao-admin">Cadastrar prato</a>
+                        <a href="./arquivos_admin_html/editar_prato.html" class="botao-admin botao-secundario">Editar pratos</a>
+                    </div>
+                </div>
+
+                <div class="card-gerenciamento">
+                    <h3>Funcionários</h3>
+                    <p>Gerencie os funcionários cadastrados no restaurante.</p>
+
+                    <div class="botoes-card">
+                        <a href="./arquivos_admin_html/cadastrar_func.html" class="botao-admin">Cadastrar funcionário</a>
+                        <a href="./arquivos_admin_html/editar_func.html" class="botao-admin botao-secundario">Editar funcionários</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="rodape">
+        <p>© 2026 Sushi Zen. Todos os direitos reservados.</p>
+    </footer>
+
+    <nav class="menu-inferior">
+        <a href="./admin.html" class="item-menu ativo"><span>⚙</span><p>Admin</p></a>
+        <a href="./index.html" class="item-menu"><span>⌂</span><p>Início</p></a>
+        <a href="./painelCozinha.html" class="item-menu"><span>▤</span><p>Cozinha</p></a>
+        <a href="./perfil.html" class="item-menu"><span>♙</span><p>Perfil</p></a>
+        <a href="./login.html" class="item-menu"><span>⇥</span><p>Sair</p></a>
+    </nav>
+
+    <script type="module" src="./js/main.js"></script>
+
 </body>
-
 </html>

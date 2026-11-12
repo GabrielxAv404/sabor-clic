@@ -1,0 +1,198 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #050505;
+    color: white;
+}
+
+.pag-SegurancaForm {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 20px;
+    position: relative;
+    overflow: hidden;
+
+    
+}
+
+.cabecalho {
+    text-align: center;
+    margin-bottom: 32px;
+    z-index: 1;
+}
+
+.logo {
+    width: 105px;
+    height: 105px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+.cabecalho h1 {
+    margin: 0;
+    color: #D9BC78;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.subtitulo {
+    color: #D9BC78;
+    font-size: 13px;
+    letter-spacing: 4px;
+    margin: 12px 0 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 672px;
+    padding: 35px 38px;
+    background-color: #FFFFFF;
+    color: #111111;
+    border-radius: 18px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.titulo-SegurancaForm {
+    text-align: center;
+    margin-bottom: 26px;
+}
+
+.titulo-SegurancaForm h2 {
+    font-size: 30px;
+    margin: 0 0 10px;
+}
+
+.titulo-SegurancaForm h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #6d6c6c
+}
+#nova_senha, #confirmar_nova_senha {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 23px;
+    border: 1px solid #CCCCCC;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+#nova_senha:focus, #confirmar_nova_senha:focus {
+    border-color: #C5A45A;
+    
+}
+
+#nova_senha::placeholder, #confirmar_nova_senha::placeholder {
+    color: #888888;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    background-color: #D9BC78;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+}
+
+#mensagem_erro {
+    text-align: center;
+    color: red;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .pag-SegurancaForm {
+        padding: 25px 15px;
+    }
+
+    .cabecalho {
+        margin-bottom: 25px;
+    }
+
+    .logo {
+        width: 90px;
+        height: 90px;
+    }
+
+    .cabecalho h1 {
+        font-size: 30px;
+    }
+
+    .subtitulo {
+        font-size: 11px;
+        letter-spacing: 3px;
+    }
+
+    .container {
+        max-width: 550px;
+        padding: 30px 25px;
+    }
+
+    .titulo-SegurancaForm h2 {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pag-SegurancaForm {
+        padding: 20px 12px;
+    }
+
+    .logo {
+        width: 75px;
+        height: 75px;
+    }
+
+    .cabecalho h1 {
+        font-size: 25px;
+        letter-spacing: 2px;
+    }
+
+    .subtitulo {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .container {
+        padding: 25px 18px;
+        border-radius: 14px;
+    }
+
+    .titulo-SegurancaForm h2 {
+        font-size: 23px;
+    }
+
+    .titulo-SegurancaForm h3 {
+        font-size: 15px;
+    }
+
+    #nova_senha, #confirmar_nova_senha {
+        padding: 13px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 14px;
+        font-size: 15px;
+    }
+}

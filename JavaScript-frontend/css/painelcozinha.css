@@ -7,7 +7,7 @@
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
   background: #050505;
-  color: #111;
+  color: #fff;
   padding-bottom: 96px;
 }
  
@@ -17,6 +17,7 @@ body {
   align-items: center;
   padding: 16px 32px;
   background: #050505;
+  border-bottom: 1px solid #222;
 }
  
 .marca {
@@ -58,57 +59,150 @@ body {
   color: #d9bc78;
   font-size: 1.1rem;
 }
- 
-.abas {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  padding: 14px 20px;
-  background: #d9bc78;
+
+/* ==========================================
+   ESTILIZAÇÃO DO AGENDAMENTO DE BANCADA
+   ========================================== */
+.agendamento-container {
+  max-width: 960px;
+  margin: 24px auto 10px auto;
+  padding: 24px;
+  background: #111111;
+  border: 1px solid #222;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
- 
-.aba {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 22px;
-  border: none;
-  border-radius: 999px;
-  background: #fff;
-  color: #111;
-  font-size: 1rem;
-  text-transform: uppercase;
-  cursor: pointer;
-}
- 
-.aba:hover {
-  background: #f1e6c6;
-}
- 
-.aba.ativa {
-  background: #a8893f;
-  color: #fff;
-}
- 
-.contador {
-  min-width: 24px;
-  height: 24px;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: #050505;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  line-height: 24px;
+
+.agendamento-container h2 {
+  color: #d9bc78;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
   text-align: center;
+  letter-spacing: 1px;
+}
+
+#formulario_agendamento {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.campo-grupo {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#formulario_agendamento label {
+  color: #ccc;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+#formulario_agendamento select,
+#formulario_agendamento input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+#formulario_agendamento select:focus,
+#formulario_agendamento input:focus {
+  border-color: #d9bc78;
+  box-shadow: 0 0 5px rgba(217, 188, 120, 0.3);
+}
+
+#formulario_agendamento button[type="submit"] {
+  padding: 12px 24px;
+  background-color: #d9bc78;
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  height: 46px;
+}
+
+#formulario_agendamento button[type="submit"]:hover {
+  background-color: #fff;
+  color: #000;
 }
  
+/* ==========================================
+   ESTILIZAÇÃO DOS CARDS DE PEDIDOS (KDS)
+   ========================================== */
 .lista {
   max-width: 960px;
   margin: 0 auto;
-  padding: 28px 20px;
+  padding: 20px;
 }
 
+/* Corrige o texto invisível dentro dos cards gerados no painel */
+.card-pedido {
+  background: #121212 !important;
+  color: #ffffff !important;
+  border: 1px solid #333 !important;
+  border-radius: 14px !important;
+  padding: 20px !important;
+  margin-bottom: 18px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.card-pedido h3 {
+  color: #d9bc78;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.card-pedido p {
+  color: #dddddd;
+  font-size: 1rem;
+  margin: 6px 0;
+}
+
+.card-pedido strong {
+  color: #ffffff;
+}
+
+/* Campos e botões de ação dentro dos pedidos */
+.card-pedido input[type="number"] {
+  background: #1a1a1a;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-right: 10px;
+  outline: none;
+}
+
+.card-pedido button {
+  padding: 9px 16px;
+  background-color: #d9bc78;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.card-pedido button:hover {
+  background-color: #fff;
+}
+
+/* Menu Inferior */
 .menu-inferior {
   position: fixed;
   left: 0;
@@ -149,4 +243,17 @@ body {
 
 .item-menu.ativo {
   color: #d9bc78;
+}
+
+@media (max-width: 768px) {
+    .topo {
+        padding: 15px 20px;
+        gap: 15px;
+    }
+    .logo { height: 48px; }
+    .nome-marca { font-size: 1.3rem; }
+    .topo h1 { font-size: 1.5rem; }
+    .agendamento-container { margin: 15px; padding: 18px; }
+    #formulario_agendamento { flex-direction: column; align-items: stretch; }
+    #formulario_agendamento button[type="submit"] { width: 100%; }
 }

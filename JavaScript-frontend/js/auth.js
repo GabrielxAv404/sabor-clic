@@ -14,16 +14,15 @@ export class AuthService {
     }
 
     static verificarAcesso(cargosPermitidos = []) {
-        const usuario = this.obterSessao()
+        const usuario = this.obterSessao();
 
         if (!usuario) {
-            window.location.href = 'login.html'
-            return
+            window.location.href = 'login.html';
+            return;
         }
 
         if (cargosPermitidos.length > 0 && !cargosPermitidos.includes(usuario.cargo)) {
-            alert('Acesso negado: O seu perfil não tem permissão para aceder a esta área')
-            window.location.href = usuario.redirect || 'index.html'
+            window.location.href = 'nao_autorizado.html';
         }
     }
 }

@@ -45,10 +45,18 @@ class PedidoModel:
         novo_pedido['id'] = id_criado
         return novo_pedido
     
-    def atualizar_status(self, pedido_id, novo_status):
+    def atualizar_status(self, pedido_id, novo_status, tempo_estimado = None):
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("UPDATE pedido SET status = %s WHERE id_pedido = %s", (novo_status, pedido_id))
+
+        if tempo_estimado:
+            # CORREÇÃO AQUI: Utilizar tempo_estimado_min para coincidir com a tabela do MySQL
+            sql = "UPDATE pedido SET status = %s, tempo_estimado_min = %s WHERE id_pedido = %s"
+            cursor.execute(sql, (novo_status, tempo_estimado, pedido_id))
+        else:
+            sql = "UPDATE pedido SET status = %s WHERE id_pedido = %s"    
+            cursor.execute(sql, (novo_status, pedido_id))
+        
         linhas_afetadas = cursor.rowcount
         conn.commit()
         conn.close()

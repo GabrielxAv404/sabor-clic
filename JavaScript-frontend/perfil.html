@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Sushi Zen</title>
+    <link rel="stylesheet" href="./css/perfil.css">
+</head>
+<body>
+
+    <main class="container">
+
+        <header class="cabecalho">
+            <h1>Sushi<span> Zen</span></h1>
+            <p class="japones">ゼンスシ</p>
+        </header>
+
+        <div class="conteudo">
+
+            <section class="titulo-pagina">
+                <h2>Meu Perfil</h2>
+                <p>Gerencie suas informações pessoais</p>
+            </section>
+
+            <section class="perfil-usuario">
+
+                <div class="foto-perfil">
+                    <span>👤</span>
+                </div>
+
+                <h2 id="perfil_username">Carregando...</h2>
+                <p class="email" id="perfil_email">carregando@email.com</p>
+
+            </section>
+
+            <section class="informacoes">
+
+                <h3>Informações pessoais</h3>
+
+                <div class="campo">
+                    <span class="icone">👤</span>
+                    <div>
+                        <p>Nome de Usuário</p>
+                        <h4 id="info_username">-</h4>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <span class="icone">✉</span>
+                    <div>
+                        <p>E-mail</p>
+                        <h4 id="info_email">-</h4>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <span class="icone">☎</span>
+                    <div>
+                        <p>Telefone de Contato</p>
+                        <h4 id="info_telefone">-</h4>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <span class="icone">🏠</span>
+                    <div>
+                        <p>Endereço Cadastrado</p>
+                        <h4 id="info_endereco">-</h4>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="opcoes">
+
+                <h3>Minha conta</h3>
+
+                <a href="endereco.html" class="opcao">
+                    <span>📍</span>
+                    <div>
+                        <h4>Meus endereços</h4>
+                        <p>Gerencie seus locais de entrega</p>
+                    </div>
+                    <span class="seta">›</span>
+                </a>
+
+                <a href="pedidos_cliente.html" class="opcao">
+                    <span>🛍️</span>
+                    <div>
+                        <h4>Meus pedidos</h4>
+                        <p>Consulte seu registro de pedidos</p>
+                    </div>
+                    <span class="seta">›</span>
+                </a>
+
+                <a href="seguranca.html" class="opcao">
+                    <span>🔒</span>
+                    <div>
+                        <h4>Segurança</h4>
+                        <p>Altere sua senha, protegendo sua conta</p>
+                    </div>
+                    <span class="seta">›</span>
+                </a>
+
+            </section>
+            
+            <a href="#" id="botao_sair_conta" class="botao-excluir" style="background:#9c2424; text-align:center; text-decoration:none;">Terminar Sessão</a>
+        </div>
+
+        <nav class="menu-inferior">
+            <a href="index.html" class="item-menu"><span>⌂</span><p>Início</p></a>
+            <a href="#pesquisa" class="item-menu"><span>⌕</span><p>Busca</p></a>
+            <a href="pedidos_cliente.html" class="item-menu"><span>▤</span><p>Pedidos</p></a>
+            <a href="perfil.html" class="item-menu ativo"><span>♙</span><p>Perfil</p></a>
+            <a href="login.html" class="item-menu"><span>⇥</span><p>Sair</p></a>
+        </nav>
+
+    </main>
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

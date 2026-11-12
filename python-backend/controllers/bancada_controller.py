@@ -3,18 +3,17 @@ from models.bancada_model import bancada_db
 
 bancada_blueprint = Blueprint('bancada', __name__)
 
-@bancada_blueprint.route('/api/bancada', methods = ['GET'])
+@bancada_blueprint.route('/api/bancadas', methods=['GET'])
 def listar_bancada():
-    return jsonify(bancada_db.obter_todas()),200
+    return jsonify(bancada_db.obter_todas()), 200
 
-
-@bancada_blueprint.route('/api/bancada/agendar', methods = ['POST'])
+@bancada_blueprint.route('/api/bancadas/agendar', methods=['POST'])
 def agendar_bancada():
-    dados =request.get_json()
+    dados = request.get_json()
     if not dados or not dados.get('id_bancada') or not dados.get('data_agendamento'):
-        return jsonify({"erro": "Preencha as informações do agendamento"}),400
+        return jsonify({"erro": "Preencha as informações do agendamento."}), 400
 
     sucesso, mensagem = bancada_db.agendar(dados)
     if sucesso:
-        return jsonify({"mensagem": mensagem})
-    return jsonify({"erro": mensagem})
+        return jsonify({"mensagem": mensagem}), 201
+    return jsonify({"erro": mensagem}), 400

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto - Sushi Zen</title>
+    <link rel="stylesheet" href="./css/detalhesPratos.css">
+</head>
+
+<body>
+
+    <main class="pagina-produto">
+
+        <section class="produto-container">
+
+            <div class="produto-imagem">
+                <img id="imagem-produto" src="./imagens/prato_destaque.jpg" alt="Imagem do produto">
+            </div>
+
+            <div class="produto-informacoes">
+
+                <a href="index.html" class="fechar" id="fechar-produto" style="text-decoration:none; display:inline-block; text-align:center; line-height:30px;">×</a>
+
+                <div class="informacoes-conteudo">
+
+                    <h2 id="nome-produto">Carregando...</h2>
+
+                    <p id="descricao-produto" style="margin: 15px 0; color: #666;"></p>
+
+                    <p id="avaliacao-produto" style="color: #e67e22; font-weight: bold;"></p>
+
+                    <!-- FORMULÁRIO PARA FINALIZAR PEDIDO -->
+                    <form id="formulario_pedido" style="margin-top: 20px;">
+                        <label for="nome_usuario" style="display:block; margin-bottom:5px; font-weight:bold;">Seu Nome:</label>
+                        <input type="text" id="nome_usuario" placeholder="Digite seu nome" required style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px;">
+
+                        <input type="hidden" id="nome_comida">
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="barra-adicionar">
+
+            <div class="quantidade">
+                <button type="button" id="diminuir">−</button>
+                <span id="quantidade">1</span>
+                <button type="button" id="aumentar">+</button>
+            </div>
+
+            <button class="botao-adicionar" id="adicionar-produto" type="button">
+                <span>Comprar Agora</span>
+                <span id="preco-produto">R$ 0,00</span>
+            </button>
+
+        </div>
+
+    </main>
+
+    <nav class="menu-inferior">
+        <a href="index.html" class="item-menu"><span>⌂</span><p>Início</p></a>
+        <a href="#pesquisa" class="item-menu"><span>⌕</span><p>Busca</p></a>
+        <a href="pedidos_cliente.html" class="item-menu"><span>▤</span><p>Pedidos</p></a>
+        <a href="perfil.html" class="item-menu"><span>♙</span><p>Perfil</p></a>
+        <a href="login.html" class="item-menu"><span>⇥</span><p>Sair</p></a>
+    </nav>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+
+</html>

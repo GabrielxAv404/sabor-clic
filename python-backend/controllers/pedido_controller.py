@@ -7,7 +7,7 @@ pedido_blueprint = Blueprint('pedidos', __name__)
 def listar():
     return jsonify(pedido_db.obter_todos()), 200
 
-@pedido_blueprint.route('/api/pedido/<int:pedido_id>', methods = ['GET'])
+@pedido_blueprint.route('/api/pedidos/<int:pedido_id>', methods=['GET'])
 def rastrear(pedido_id):
     pedido = pedido_db.obter_por_id(pedido_id)
     if pedido:
@@ -18,19 +18,22 @@ def rastrear(pedido_id):
 def criar():
     dados = request.get_json()
     if not dados or not dados.get('nome_usuario') or not dados.get('nome_comida'):
-        return jsonify({"erro": "Preencha os campos do pedido."}),400
+        return jsonify({"erro": "Preencha os campos do pedido."}), 400
+
     pedido_criado = pedido_db.adicionar(dados)
-    return jsonify({""
-    "mensagem": "Pedido criado com sucesso",
-    "id_pedido": pedido_criado['id']
+    return jsonify({
+        "mensagem": "Pedido criado com sucesso",
+        "id_pedido": pedido_criado['id']
     }), 201
 
-@pedido_blueprint.route("/api/pedidos/<int:pedido_id>/status", methods = ["PUT"])
-def atulizar_status(pedido_id):
+@pedido_blueprint.route("/api/pedidos/<int:pedido_id>/status", methods=["PUT"])
+def atualizar_status(pedido_id):
     dados = request.get_json() or {}
 
-    novo_status = dados.get("status", "pronto para entrega")
-    sucesso, mensagem = pedido_db.atulizar_status(pedido_id, novo_status)
+    novo_status = dados.get("status", "EM PREPARO")
+    tempo_estimado = dados.get("tempo_estimado", None)
+    
+    sucesso, mensagem = pedido_db.atualizar_status(pedido_id, novo_status, tempo_estimado)
     
     if sucesso:
         return jsonify({"mensagem": mensagem}), 200

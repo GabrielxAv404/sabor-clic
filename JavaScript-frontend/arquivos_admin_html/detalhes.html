@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Prato - Sushi Zen</title>
+    <link rel="stylesheet" href="../css/inndex.css">
+</head>
+<body>
+    <main class="container">
+        <header class="cabecalho">
+            <h1>Sushi<span> Zen</span></h1>
+            <p class="japones">詳細</p>
+        </header>
+
+        <div class="conteudo" style="padding: 20px;">
+            <a href="index.html" style="text-decoration: none; color: #333; font-weight: bold;">← Voltar ao Início</a>
+
+            <div class="detalhe-prato-container" style="margin-top: 20px; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <img id="detalhe_img" src="" alt="Imagem do Prato" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 6px;">
+                
+                <h2 id="detalhe_nome" style="margin-top: 15px; font-size: 24px;">Carregando...</h2>
+                <p id="detalhe_aval" style="color: #e67e22; font-weight: bold; margin: 5px 0;"></p>
+                <p id="detalhe_preco" style="font-size: 22px; color: #27ae60; font-weight: bold; margin: 10px 0;"></p>
+                
+                <div style="margin: 15px 0;">
+                    <h4>Descrição do Prato:</h4>
+                    <p id="detalhe_desc" style="color: #666; line-height: 1.5;"></p>
+                </div>
+
+                <hr style="margin: 20px 0;">
+
+                <!-- FORMULÁRIO DE COMPRA / CARRINHO -->
+                <section class="fazer-pedido" id="secao_carrinho">
+                    <h3>Finalizar Pedido deste Item</h3>
+                    <form id="formulario_pedido" style="margin-top: 10px;">
+                        <label for="nome_usuario">Seu Nome:</label>
+                        <input type="text" id="nome_usuario" name="nome_usuario" placeholder="Digite seu nome" required style="width: 100%; padding: 8px; margin: 5px 0 10px 0;">
+
+                        <label for="nome_comida">Prato Escolhido:</label>
+                        <input type="text" id="nome_comida" name="nome_comida" readonly required style="width: 100%; padding: 8px; margin: 5px 0 10px 0; background: #f0f0f0;">
+
+                        <label for="quantidade">Quantidade:</label>
+                        <input type="number" id="quantidade" name="quantidade" value="1" min="1" required style="width: 100%; padding: 8px; margin: 5px 0 15px 0;">
+
+                        <button type="submit" style="width: 100%; padding: 12px; background: #e74c3c; color: white; border: none; font-weight: bold; border-radius: 5px; cursor: pointer;">
+                            Comprar Agora (Enviar para a Cozinha)
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </div>
+
+        <nav class="menu-inferior">
+            <a href="./admin.html" class="item-menu ativo"><span>⚙</span><p>Admin</p></a>
+            <a href="./index.html" class="item-menu"><span>⌂</span><p>Início</p></a>
+            <a href="./painelCozinha.html" class="item-menu"><span>▤</span><p>Cozinha</p></a>
+            <a href="./perfil.html" class="item-menu"><span>♙</span><p>Perfil</p></a>
+            <a href="./login.html" class="item-menu"><span>⇥</span><p>Sair</p></a>
+        </nav>
+
+    <!-- Script para carregar os dados via URL e gerenciar o envio -->
+    <script type="module">
+        import { ApiService } from "./js/api.js";
+        import { Pedido } from "./js/models/pedido.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Captura os dados passados pela URL
+            const params = new URLSearchParams(window.location.search);
+            const nome = params.get('nome');
+            const preco = params.get('preco');
+            const desc = params.get('desc');
+            const aval = params.get('aval');
+            const img = params.get('img');
+
+            if (nome) {
+                document.getElementById('detalhe_nome').innerText = nome;
+                document.getElementById('detalhe_preco').innerText = `R$ ${preco}`;
+                document.getElementById('detalhe_desc').innerText = desc;
+                document.getElementById('detalhe_aval').innerText = aval;
+                document.getElementById('detalhe_img').src = img;
+                document.getElementById('nome_comida').value = nome;
+            }
+
+            // Envio do pedido
+            const formularioPedido = document.getElementById('formulario_pedido');
+            formularioPedido.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const novoPedido = new Pedido({
+                    nome_usuario: document.getElementById('nome_usuario').value,
+                    nome_comida: document.getElementById('nome_comida').value,
+                    quantidade: document.getElementById('quantidade').value
+                });
+
+                try {
+                    const res = await ApiService.criarPedido(novoPedido.toJSON());
+                    const dados = await res.json();
+
+                    if (res.ok) {
+                        alert(`Pedido realizado com sucesso! O código do seu pedido é #${dados.id_pedido || dados.id || ''}`);
+                        window.location.href = 'pedidos_cliente.html';
+                    } else {
+                        alert(dados.erro || 'Erro ao realizar o pedido.');
+                    }
+                } catch (err) {
+                    console.error('Erro ao enviar o pedido:', err);
+                    alert('Falha na comunicação com o servidor backend.');
+                }
+            });
+        });
+    </script>
+</body>
+<script type="module" src="../js/main.js"></script>
+</html>

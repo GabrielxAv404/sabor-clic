@@ -1,0 +1,408 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #e9e5dc;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #080808;
+    padding-bottom: 90px;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+}
+
+.cabecalho {
+    flex-shrink: 0;
+    background: #000;
+    color: #fff;
+    padding: 25px 5% 20px;
+    text-align: center;
+}
+
+.cabecalho h1 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.cabecalho h1 span {
+    color: #d9bc78;
+}
+
+.japones {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.conteudo {
+    flex: 1;
+    background: #fff;
+    border-radius: 15px 15px 0 0;
+    padding: 30px 5%;
+}
+
+.titulo-pagina {
+    margin-bottom: 25px;
+}
+
+.titulo-pagina h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.titulo-pagina p {
+    color: #777;
+    font-size: 15px;
+}
+
+.perfil-usuario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+    margin-bottom: 30px;
+    background: #faf8f3;
+    border: 1px solid #eee5d2;
+    border-radius: 15px;
+}
+
+.foto-perfil {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #000;
+    border: 3px solid #d9bc78;
+    margin-bottom: 15px;
+}
+
+.foto-perfil span {
+    font-size: 45px;
+    color: #d9bc78;
+}
+
+.perfil-usuario h2 {
+    font-size: 23px;
+    margin-bottom: 6px;
+}
+
+.email {
+    color: #777;
+    font-size: 15px;
+    margin-bottom: 18px;
+}
+
+.botao-editar {
+    padding: 11px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #d9bc78;
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.botao-editar:hover {
+    background: #c5a45a;
+}
+
+.informacoes,
+.opcoes {
+    margin-bottom: 30px;
+}
+
+.informacoes h3,
+.opcoes h3 {
+    font-size: 21px;
+    margin-bottom: 15px;
+}
+
+.campo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.icone {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #f5f0e4;
+    font-size: 22px;
+}
+
+.campo p {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.campo h4 {
+    font-size: 16px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.opcao {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 10px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: #111;
+}
+
+.opcao > span:first-child {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #f5f0e4;
+    font-size: 22px;
+}
+
+.opcao div {
+    flex: 1;
+    min-width: 0;
+}
+
+.opcao h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.opcao p {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.seta {
+    font-size: 28px;
+    color: #b59a5b;
+}
+
+.opcao:hover {
+    background: #faf8f3;
+}
+
+.menu-inferior {
+    height: 75px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    background: #050505;
+    border-top: 1px solid #222;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.item-menu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    text-decoration: none;
+    color: #777;
+}
+
+.item-menu span {
+    font-size: 28px;
+    line-height: 30px;
+}
+
+.item-menu p {
+    font-size: 14px;
+}
+
+.item-menu:hover {
+  color: #fff;
+}
+
+.item-menu.ativo {
+    color: #d9bc78;
+}
+
+.botao-excluir {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin-top: 15px;
+    background-color: #9c2424;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.botao-excluir:hover {
+    background-color: #5c1d1d;
+}
+
+@media (max-width: 768px) {
+    .cabecalho {
+        padding: 22px 4% 18px;
+    }
+
+    .cabecalho h1 {
+        font-size: 27px;
+    }
+
+    .conteudo {
+        padding: 25px 4%;
+    }
+
+    .titulo-pagina h2 {
+        font-size: 25px;
+    }
+
+    .perfil-usuario {
+        padding: 20px;
+    }
+
+    .foto-perfil {
+        width: 90px;
+        height: 90px;
+    }
+
+    .foto-perfil span {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-bottom: 80px;
+    }
+
+    .cabecalho {
+        padding: 18px 12px;
+    }
+
+    .cabecalho h1 {
+        font-size: 24px;
+    }
+
+    .japones {
+        font-size: 12px;
+    }
+
+    .conteudo {
+        padding: 22px 15px;
+    }
+
+    .titulo-pagina {
+        margin-bottom: 20px;
+    }
+
+    .titulo-pagina h2 {
+        font-size: 23px;
+    }
+
+    .titulo-pagina p {
+        font-size: 13px;
+    }
+
+    .perfil-usuario {
+        padding: 18px 12px;
+        margin-bottom: 22px;
+    }
+
+    .foto-perfil {
+        width: 80px;
+        height: 80px;
+    }
+
+    .foto-perfil span {
+        font-size: 35px;
+    }
+
+    .perfil-usuario h2 {
+        font-size: 20px;
+    }
+
+    .email {
+        font-size: 13px;
+    }
+
+    .informacoes h3,
+    .opcoes h3 {
+        font-size: 19px;
+    }
+
+    .campo,
+    .opcao {
+        gap: 10px;
+        padding: 15px 5px;
+    }
+
+    .icone,
+    .opcao > span:first-child {
+        width: 40px;
+        height: 40px;
+        font-size: 19px;
+    }
+
+    .campo h4,
+    .opcao h4 {
+        font-size: 14px;
+    }
+
+    .campo p,
+    .opcao p {
+        font-size: 12px;
+    }
+
+    .seta {
+        font-size: 23px;
+    }
+
+    .botao-excluir {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .menu-inferior {
+        height: 68px;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .item-menu span {
+        font-size: 23px;
+        line-height: 25px;
+    }
+
+    .item-menu p {
+        font-size: 11px;
+    }
+}

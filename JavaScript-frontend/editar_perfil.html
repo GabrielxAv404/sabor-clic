@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Sushi Zen</title>
+    <link rel="stylesheet" href="./css/editar_perfil.css">
+</head>
+
+<body>
+
+    <main class="pag-PerfilForm">
+
+        <header class="cabecalho">
+            <img src="./imagens/logo projeto.png" alt="Logo" class="logo">
+
+            <h1>SUSHI ZEN</h1>
+
+            <p class="subtitulo">ENTREGA • EVENTOS • EXPERIÊNCIAS</p>
+        </header>
+
+        <section class="container">
+
+            <header class="titulo-PerfilForm">
+                <h2>Edite seu Perfil</h2>
+            </header>
+
+            <form action="" method="post" id="CadPerfilForm">
+
+                <label for="nome">Nome de usuário</label>
+                <input type="text" name="nome" id="nome" placeholder="Digite o nome de usuário" required>
+
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email" placeholder="Digite o e-mail do usuário" required>
+
+                <label for="telefone">Telefone</label>
+                <input type="tel" name="telefone" id="telefone" placeholder="Digite o telefone do usuário" required>
+
+                <button type="submit">Alterar Perfil</button>
+
+                <div id="mensagem_erro"></div>
+
+            </form>
+
+        </section>
+
+    </main>
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

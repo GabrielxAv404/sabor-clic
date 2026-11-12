@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Funcionário - Sushi Zen</title>
+    <link rel="stylesheet" href="../css/arquivos_admin_css/cadastrar_func.css">
+</head>
+
+<body>
+
+    <main class="pag-cadastroFunc">
+
+    <header class="cabecalho">
+        <img src="../imagens/logo projeto.png" alt="Logo" class="logo">
+
+        <h1>SUSHI ZEN</h1>
+
+        <p class="subtitulo">ENTREGA • EVENTOS • EXPERIÊNCIAS</p>
+    </header>
+
+    <section class="container">
+
+        <header class="titulo-cadastroFunc">
+            <h2>Cadastre um novo funcionário!</h2>
+        </header>
+
+        <form id="formulario_funcionario">
+
+            <label for="username">Nome de Usuário (Login)</label>
+            <input type="text" name="username" id="username" placeholder="Digite o usuário do funcionário" required>
+
+            <label for="password">Senha</label>
+            <input type="password" name="password" id="password" placeholder="Digite a senha" required>
+
+            <label for="cargo">Cargo / Área de Atuação</label>
+            <select name="cargo" id="cargo" required style="width: 100%; padding: 15px; margin-bottom: 23px; border: 1px solid #CCCCCC; border-radius: 12px; font-size: 15px; outline: none; background: white;">
+                <option value="">Selecione o cargo</option>
+                <option value="cozinha">Cozinha</option>
+                <option value="admin">Administrador</option>
+            </select>
+
+            <button type="submit">Cadastrar Funcionário</button>
+
+            <div id="mensagem_erro"></div>
+
+        </form>
+
+        <div class="voltar" style="text-align: center; margin-top: 20px;">
+            <a href="../admin.html" style="color: #a87920; text-decoration: none; font-weight: bold;">Voltar ao painel administrativo</a>
+        </div>
+
+    </section>
+
+</main>
+<script type="module" src="../js/main.js"></script>
+
+
+</body>
+</html>

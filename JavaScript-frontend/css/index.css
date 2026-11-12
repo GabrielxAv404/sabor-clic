@@ -149,7 +149,7 @@ body {
 
 .lista-categorias {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 20px;
     text-align: center;
 }
@@ -258,3 +258,168 @@ body {
     color: #d9bc78;
 }
 
+
+@media (max-width: 768px) {
+    .cabecalho {
+        padding: 22px 4% 18px;
+    }
+
+    .cabecalho h1 {
+        font-size: 27px;
+    }
+
+    .conteudo {
+        padding: 18px 3%;
+    }
+
+    .destaque {
+        height: 230px;
+    }
+
+    .texto-destaque {
+        top: 25px;
+        left: 20px;
+    }
+
+    .texto-destaque h2,
+    .texto-destaque h3 {
+        font-size: 23px;
+    }
+
+    .texto-destaque p {
+        font-size: 20px;
+    }
+
+    .lista-categorias {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 15px;
+    }
+
+    .categoria span {
+        height: 60px;
+        font-size: 38px;
+    }
+
+    .categoria p {
+        font-size: 14px;
+    }
+
+    .restaurantes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+    }
+
+    .card-restaurante img {
+        height: 220px;
+    }
+
+    .informacoes-restaurante {
+        padding: 12px;
+    }
+
+    .informacoes-restaurante h3 {
+        font-size: 18px;
+    }
+
+    .informacoes-restaurante p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cabecalho {
+        padding: 18px 15px;
+    }
+
+    .cabecalho h1 {
+        font-size: 24px;
+    }
+
+    .japones {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .busca {
+        height: 42px;
+        padding: 0 10px;
+    }
+
+    .busca span {
+        font-size: 23px;
+    }
+
+    .busca input {
+        font-size: 14px;
+    }
+
+    .conteudo {
+        padding: 15px 12px;
+    }
+
+    .destaque {
+        height: 180px;
+        margin-bottom: 22px;
+    }
+
+    .texto-destaque {
+        top: 18px;
+        left: 15px;
+    }
+
+    .texto-destaque h2,
+    .texto-destaque h3 {
+        font-size: 19px;
+    }
+
+    .texto-destaque p {
+        font-size: 17px;
+    }
+
+    .categorias h2,
+    .restaurantes h2 {
+        font-size: 22px;
+        margin-bottom: 13px;
+    }
+
+    .lista-categorias {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .categoria span {
+        height: 55px;
+        font-size: 35px;
+    }
+
+    .categoria p {
+        font-size: 13px;
+    }
+
+    .restaurantes {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .card-restaurante img {
+        height: 210px;
+    }
+
+    .informacoes-restaurante h3 {
+        font-size: 18px;
+    }
+
+    .menu-inferior {
+        height: 68px;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .item-menu span {
+        font-size: 23px;
+        line-height: 25px;
+    }
+
+    .item-menu p {
+        font-size: 11px;
+    }
+}

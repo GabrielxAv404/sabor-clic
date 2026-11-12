@@ -66,7 +66,6 @@ export class ApiService {
             body: JSON.stringify(credenciais)
         })
     }
-
     static async cadastrarUsuario(dadosusuario) {
         return await fetch(`${API_URL}/cadastro`, {
             method: 'POST',
@@ -81,5 +80,45 @@ export class ApiService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dadosfuncionario)
         })
+    }
+    static async atualizarPerfil(dadosPerfil) {
+    return await fetch(`${API_URL}/perfil/editar`, {
+        method: 'POST', // ou PUT
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dadosPerfil)
+    });
+}
+
+static async salvarEndereco(dadosEndereco) {
+    return await fetch(`${API_URL}/endereco`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dadosEndereco)
+    });
+}
+static async atualizarStatusPedido(idPedido, status, tempoEstimado = null) {
+        return await fetch(`${API_URL}/pedidos/${idPedido}/status`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                status: status, 
+                tempo_estimado_min: tempoEstimado 
+            })
+        });
+    }
+    static async alterarSenha(dadosSenha) {
+        return await fetch(`${API_URL}/seguranca/senha`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosSenha)
+        });
+    }
+
+    static async atualizarEndereco(dadosEndereco) {
+        return await fetch(`${API_URL}/endereco/atualizar`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosEndereco)
+        });
     }
 }

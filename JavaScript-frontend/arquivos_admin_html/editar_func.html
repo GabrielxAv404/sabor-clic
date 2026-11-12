@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Funcionário - Sushi Zen</title>
+    <link rel="stylesheet" href="../css/arquivos_admin_css/editar_func.css">
+</head>
+<body>
+
+    <header>
+        <img src="./imagens/logo projeto.png" alt="Logo Sushi Zen">
+        <h1>SUSHI ZEN</h1>
+        <p>PAINEL ADMINISTRATIVO - EDITAR FUNCIONÁRIO</p>
+    </header>
+
+    <main>
+        <section class="conteudo">
+            <h2>Altere os dados de um Funcionário</h2>
+            <p class="subtitulo">Confira todos os funcionários cadastrados no sistema.</p>
+
+            <div class="barra-pesquisa">
+                <input type="text" id="campo_busca_func" placeholder="Pesquisar funcionário pelo nome...">
+            </div>       
+
+            <!-- ÁREA ONDE OS FUNCIONÁRIOS SERÃO CARREGADOS -->
+            <div id="lista_funcionarios" style="margin-top: 20px;"></div>
+
+            <div class="voltar" style="margin-top: 20px;">
+                <a href="../admin.html">Voltar ao painel administrativo</a>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

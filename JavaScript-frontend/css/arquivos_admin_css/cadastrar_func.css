@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #050505;
+    color: white;
+}
+
+.pag-cadastroFunc {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cabecalho {
+    text-align: center;
+    margin-bottom: 25px;
+    z-index: 1;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.cabecalho h1 {
+    color: #D9BC78;
+    font-size: 34px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.subtitulo {
+    color: #D9BC78;
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+.container {
+    width: 100%;
+    max-width: 550px;
+    padding: 35px 35px;
+    background-color: #FFFFFF;
+    color: #111111;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.titulo-cadastroFunc {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.titulo-cadastroFunc h2 {
+    font-size: 26px;
+    color: #222;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 13px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #CCCCCC;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    background-color: #FAFAFA;
+    color: #111;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #D9BC78;
+    background-color: #FFF;
+    box-shadow: 0 0 5px rgba(217, 188, 120, 0.3);
+}
+
+input::placeholder, textarea::placeholder {
+    color: #888888;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #D9BC78;
+    color: #111;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    margin-top: 5px;
+}
+
+button[type="submit"]:hover {
+    background-color: #111;
+    color: #FFFFFF;
+}
+
+#mensagem_erro {
+    text-align: center;
+    color: #e74c3c;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 480px;
+        padding: 25px 20px;
+    }
+
+    .cabecalho h1 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 15px;
+    }
+
+    .cabecalho h1 {
+        font-size: 24px;
+    }
+
+    .titulo-cadastroFunc h2 {
+        font-size: 22px;
+    }
+
+    input, select, textarea, button[type="submit"] {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
