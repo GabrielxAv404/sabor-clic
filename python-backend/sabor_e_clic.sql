@@ -111,7 +111,6 @@ VALUES
 ON DUPLICATE KEY UPDATE
 nome_exibicao = VALUES(nome_exibicao);
 
--- Cardápio Inicial (Pratos do Sushi Zen / Sabor & Clic)
 INSERT INTO prato
 (nome, preco, descricao, status, estoque_disponivel)
 VALUES
@@ -122,7 +121,7 @@ VALUES
 ('Combo Japonês (2 pessoas)', 120.00, 'Combo completo com 32 peças variadas, 2 sunomonos e duas bebidas à escolha.', 'DISPONIVEL', TRUE),
 ('Combo Japonês (4 pessoas)', 250.00, 'O maior clássico da casa com 64 peças selecionadas, ideal para compartilhar em família.', 'DISPONIVEL', TRUE);
 
--- Bancadas da Dark Kitchen
+
 INSERT INTO bancada
 (identificacao, equipamentos, ativa)
 VALUES
@@ -130,12 +129,22 @@ VALUES
 ('Bancada B - Quentes & Frituras', 'Fritadeiras elétricas duplas, fogão industrial, exaustor.', TRUE),
 ('Bancada C - Sobremesas & Confeitaria', 'Batedeiras planetárias, geladeira de ultracongelamento.', TRUE);
 
--- Pedidos Iniciais de Exemplo no KDS
+
 INSERT INTO pedido
 (nome_usuario, nome_comida, quantidade, status, tempo_estimado_min, total)
 VALUES
 ('Felipe Elias', 'Barca de Sushi Completa', 1, 'AGUARDANDO', 0, 29.99),
 ('Gabriel Santos', 'Hot Roll Especial do Chef', 2, 'EM PREPARO', 20, 30.00);
+
+INSERT INTO perfil_usuario (id_usuario, email, telefone, nome_completo)
+VALUES (
+    (SELECT id_usuario FROM usuario WHERE username = 'admin' LIMIT 1),
+    'admin@sushizen.com',
+    '(11) 99999-9999',
+    'Administrador do Sistema'
+)
+ON DUPLICATE KEY UPDATE 
+    email = 'admin@sushizen.com';
 
 USE dark_kitchen;
 
@@ -365,3 +374,4 @@ SELECT
 FROM pedido_historico
 WHERE id_pedido = @id_pedido
 ORDER BY data_evento;
+
