@@ -196,6 +196,74 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const formSeguranca = document.getElementById('SegurancaForm');
+    if (formSeguranca) {
+        formSeguranca.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const usuarioSessao = AuthService.obterSessao();
+            if (!usuarioSessao) {
+                alert('Faça login novamente.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const novaSenha = document.getElementById('nova_senha').value;
+            const confirmarSenha = document.getElementById('confirmar_nova_senha').value;
+            const divErro = document.getElementById('mensagem_erro');
+
+            if (novaSenha !== confirmarSenha) {
+                if (divErro) divErro.innerText = 'As senhas não coincidem!';
+                else alert('As senhas não coincidem!');
+                return;
+            }
+
+            try {
+                const res = await ApiService.alterarSenha({
+                    id_usuario: usuarioSessao.id,
+                    nova_senha: novaSenha
+                });
+                const dados = await res.json();
+
+                if (res.ok) {
+                    alert('Senha alterada com sucesso!');
+                    window.location.href = 'perfil.html';
+                } else {
+                    if (divErro) divErro.innerText = dados.erro || 'Erro ao alterar senha.';
+                }
+            } catch (err) {
+                console.error('Erro:', err);
+            }
+        });
+    }
+
+    const inputCep = document.getElementById('cep');
+    if (inputCep) {
+        inputCep.addEventListener('input', async () => {
+            let cep = inputCep.value.replace(/\D/g, '');
+
+            if (cep.length === 8) {
+                try {
+                    const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const dados = await resposta.json();
+
+                    if (!dados.erro) {
+                        document.getElementById('rua').value = dados.logradouro || '';
+                        document.getElementById('bairro').value = dados.bairro || '';
+                        document.getElementById('cidade').value = dados.localidade || '';
+                        document.getElementById('numero').focus();
+                    } else {
+                        alert('CEP não encontrado.');
+                        document.getElementById('rua').value = '';
+                        document.getElementById('bairro').value = '';
+                        document.getElementById('cidade').value = '';
+                    }
+                } catch (err) {
+                    console.error('Erro ao buscar o CEP:', err);
+                }
+            }
+        });
+    }
+
     const linkPerfil = document.querySelector('a[href="perfil.html"]');
     if (linkPerfil) {
         linkPerfil.addEventListener('click', (e) => {
@@ -356,7 +424,7 @@ function configurarSelecaoCardsPopulares() {
             const preco = card.getAttribute('data-preco') || '29.99';
             const desc = card.getAttribute('data-desc') || 'Delicioso prato preparado com ingredientes frescos e selecionados.';
             const aval = card.getAttribute('data-aval') || '4.8 ★ (500+ avaliações)';
-            const img = card.getAttribute('data-img') || card.querySelector('img')?.getAttribute('src') || './imagens/prato_destaque.jpg';
+            const img = card.getAttribute('data-img') || card.querySelector('img')?.getAttribute('src') || './imagens/prato_destaque.png';
 
             if (nome) {
                 window.location.href = `detalhesPratos.html?nome=${encodeURIComponent(nome)}&preco=${encodeURIComponent(preco)}&desc=${encodeURIComponent(desc)}&aval=${encodeURIComponent(aval)}&img=${encodeURIComponent(img)}`;
@@ -427,17 +495,19 @@ function inicializarPaginaDetalhes() {
     const btnAdicionar = document.getElementById('adicionar-produto');
     if (btnAdicionar) {
         btnAdicionar.addEventListener('click', async () => {
-            const nomeUsuarioInput = document.getElementById('nome_usuario');
-            const nomeUsuario = nomeUsuarioInput ? nomeUsuarioInput.value.trim() : '';
-            const nomeComida = document.getElementById('nome_comida')?.value;
-
-            if (!nomeUsuario) {
-                alert('Por favor, digite seu nome antes de fazer o pedido.');
-                if (nomeUsuarioInput) nomeUsuarioInput.focus();
+            const usuarioSessao = AuthService.obterSessao();
+            
+            if (!usuarioSessao) {
+                alert('Você precisa estar logado para fazer um pedido.');
+                window.location.href = 'login.html';
                 return;
             }
 
+            const nomeUsuario = usuarioSessao.username || usuarioSessao.nome || 'Cliente';
+            const nomeComida = document.getElementById('nome_comida')?.value || nome;
+
             const novoPedido = new Pedido({
+                id_usuario: usuarioSessao.id,
                 nome_usuario: nomeUsuario,
                 nome_comida: nomeComida,
                 quantidade: qtd
@@ -540,7 +610,7 @@ function configurarFormulariosAuth() {
         });
     }
 
-    if (formCadastro) {
+if (formCadastro) {
         formCadastro.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -553,10 +623,49 @@ function configurarFormulariosAuth() {
                 return;
             }
 
+            if (senha.length < 15 || senha.length > 128) {
+                if (divErro) divErro.innerText = 'A senha deve ter entre 15 e 128 caracteres.';
+                else alert('A senha deve ter entre 15 e 128 caracteres.');
+                return;
+            }
+
+            if (!/[A-Z]/.test(senha)) {
+                if (divErro) divErro.innerText = 'A senha deve conter pelo menos uma letra maiúscula.';
+                else alert('A senha deve conter pelo menos uma letra maiúscula.');
+                return;
+            }
+
+            if (!/[a-z]/.test(senha)) {
+                if (divErro) divErro.innerText = 'A senha deve conter pelo menos uma letra minúscula.';
+                else alert('A senha deve conter pelo menos uma letra minúscula.');
+                return;
+            }
+
+            if (!/\d/.test(senha)) {
+                if (divErro) divErro.innerText = 'A senha deve conter pelo menos um número.';
+                else alert('A senha deve conter pelo menos um número.');
+                return;
+            }
+
+            if (!/[^A-Za-z0-9]/.test(senha)) {
+                if (divErro) divErro.innerText = 'A senha deve conter pelo menos um caractere especial.';
+                else alert('A senha deve conter pelo menos um caractere especial.');
+                return;
+            }
+
+            const telefoneInput = document.getElementById('telefone').value;
+            const telefoneLimpo = telefoneInput.replace(/\D/g, '');
+
+            if (telefoneLimpo.length !== 11) {
+                if (divErro) divErro.innerText = 'O telefone deve ter exatamente 11 dígitos.';
+                else alert('O telefone deve ter exatamente 11 dígitos.');
+                return;
+            }
+
             const usuario = {
                 email: document.getElementById('email').value,
                 username: document.getElementById('username').value,
-                telefone: document.getElementById('telefone').value,
+                telefone: telefoneLimpo,
                 endereco: document.getElementById('endereco').value,
                 password: senha
             };
@@ -575,6 +684,19 @@ function configurarFormulariosAuth() {
             } catch (err) {
                 console.error('Erro ao realizar cadastro:', err);
             }
+        });
+    }
+
+    const inputTelefone = document.getElementById('telefone');
+    if (inputTelefone) {
+        inputTelefone.addEventListener('input', () => {
+            let valor = inputTelefone.value.replace(/\D/g, '');
+            
+            if (valor.length > 11) {
+                valor = valor.slice(0, 11);
+            }
+            
+            inputTelefone.value = valor;
         });
     }
 }
@@ -697,7 +819,7 @@ async function carregarEdicaoFuncionarios() {
 
 async function carregarDadosPerfil() {
     const perfilUsernameEl = document.getElementById('perfil_username');
-    if (!perfilUsernameEl) return; // Executa somente em perfil.html
+    if (!perfilUsernameEl) return;
 
     const usuarioSessao = AuthService.obterSessao();
     if (!usuarioSessao || !usuarioSessao.id) {
@@ -804,79 +926,23 @@ window.marcarEntregue = async (id) => {
         console.error('Erro ao finalizar pedido:', err);
     }
 
-    const formSeguranca = document.getElementById('SegurancaForm');
-    if (formSeguranca) {
-        formSeguranca.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const usuarioSessao = AuthService.obterSessao();
-            if (!usuarioSessao) {
-                alert('Faça login novamente.');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            const novaSenha = document.getElementById('nova_senha').value;
-            const confirmarSenha = document.getElementById('confirmar_nova_senha').value;
-            const divErro = document.getElementById('mensagem_erro');
-
-            if (novaSenha !== confirmarSenha) {
-                if (divErro) divErro.innerText = 'As senhas não coincidem!';
-                else alert('As senhas não coincidem!');
-                return;
-            }
-
-            try {
-                const res = await ApiService.alterarSenha({
-                    id_usuario: usuarioSessao.id,
-                    nova_senha: novaSenha
-                });
-                const dados = await res.json();
-
-                if (res.ok) {
-                    alert('Senha alterada com sucesso!');
-                    window.location.href = 'perfil.html';
-                } else {
-                    if (divErro) divErro.innerText = dados.erro || 'Erro ao alterar senha.';
-                }
-            } catch (err) {
-                console.error('Erro:', err);
-            }
-        });
-    }
-
-    const formCadEndereco = document.getElementById('CadEnderecoForm');
-    if (formCadEndereco) {
-        formCadEndereco.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const usuarioSessao = AuthService.obterSessao();
-            if (!usuarioSessao) {
-                alert('Faça login novamente.');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            const dadosEndereco = {
-                id_usuario: usuarioSessao.id,
-                cidade: document.getElementById('cidade').value,
-                cep: document.getElementById('cep').value,
-                bairro: document.getElementById('bairro').value,
-                rua: document.getElementById('rua').value,
-                numero: document.getElementById('numero').value
-            };
-
-            try {
-                const res = await ApiService.atualizarEndereco(dadosEndereco);
-                const dados = await res.json();
-
-                if (res.ok) {
-                    alert('Endereço atualizado com sucesso!');
-                    window.location.href = 'perfil.html';
-                } else {
-                    alert(dados.erro || 'Erro ao atualizar endereço.');
-                }
-            } catch (err) {
-                console.error('Erro:', err);
-            }
-        });
+    const formEndereco = document.getElementById('CadEnderecoForm');
+    
+    if (formEndereco) {
+        const usuarioSessao = AuthService.obterSessao();
+        if (usuarioSessao && usuarioSessao.id) {
+            fetch(`http://127.0.0.1:5000/api/perfil/${usuarioSessao.id}`)
+                .then(res => res.json())
+                .then(dados => {
+                    if (dados) {
+                        document.getElementById('cep').value = dados.cep || '';
+                        document.getElementById('rua').value = dados.rua || '';
+                        document.getElementById('bairro').value = dados.bairro || '';
+                        document.getElementById('cidade').value = dados.localidade || dados.cidade || '';
+                        document.getElementById('numero').value = dados.numero || '';
+                    }
+                })
+                .catch(err => console.error(err));
+        }
     }
 };

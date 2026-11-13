@@ -1,16 +1,28 @@
 export class AuthService {
     static salvarSessao(usuario) {
-        localStorage.setItem('sabor_usuario', JSON.stringify(usuario))
+        const sessaoComExpiracao = {
+            ...usuario,
+            _expiracao: Date.now() + 5 * 60 * 1000
+        };
+        localStorage.setItem('sabor_usuario', JSON.stringify(sessaoComExpiracao));
     }
 
     static obterSessao() {
-        const dados = localStorage.getItem('sabor_usuario')
-        return dados ? JSON.parse(dados) : null
+        const dadosStr = localStorage.getItem('sabor_usuario');
+        if (!dadosStr) return null;
+
+        const dados = JSON.parse(dadosStr);
+        if (dados._expiracao && Date.now() > dados._expiracao) {
+            this.encerrarSessao();
+            return null;
+        }
+
+        return dados;
     }
 
     static encerrarSessao() {
-        localStorage.removeItem('sabor_usuario')
-        window.location.href = 'login.html'
+        localStorage.removeItem('sabor_usuario');
+        window.location.href = 'login.html';
     }
 
     static verificarAcesso(cargosPermitidos = []) {

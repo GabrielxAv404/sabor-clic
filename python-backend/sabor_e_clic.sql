@@ -15,6 +15,28 @@ CREATE TABLE usuario (
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Tabela de Perfil de Utilizador (E-mail e Telefone)
+CREATE TABLE IF NOT EXISTS perfil_usuario (
+    id_perfil INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT UNSIGNED NOT NULL,
+    email VARCHAR(120) NOT NULL UNIQUE,
+    telefone VARCHAR(30),
+    nome_completo VARCHAR(120),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- Tabela de Endereços (Com colunas opcionais NULL para evitar erros no cadastro)
+CREATE TABLE IF NOT EXISTS endereco_usuario (
+    id_endereco INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT UNSIGNED NOT NULL,
+    cidade VARCHAR(100) NULL,
+    cep VARCHAR(20) NULL,
+    bairro VARCHAR(100) NULL,
+    rua VARCHAR(150) NULL,
+    numero VARCHAR(20) NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
 CREATE TABLE prato (
     id_prato INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(120) NOT NULL,
@@ -110,6 +132,7 @@ VALUES
 )
 ON DUPLICATE KEY UPDATE
 nome_exibicao = VALUES(nome_exibicao);
+
 
 INSERT INTO prato
 (nome, preco, descricao, status, estoque_disponivel)
@@ -374,4 +397,3 @@ SELECT
 FROM pedido_historico
 WHERE id_pedido = @id_pedido
 ORDER BY data_evento;
-
