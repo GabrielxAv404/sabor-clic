@@ -65,5 +65,18 @@ class PedidoModel:
         if linhas_afetadas > 0:
             return True, f"Pedido #{pedido_id} alterado para: {novo_status}"
         return False, "Pedido não encontrado"
+    
+    def obter_por_id(self, id_pedido):
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+            SELECT id_pedido AS id, id_usuario, nome_usuario, nome_comida, quantidade, status, tempo_estimado_min
+            FROM pedido
+            WHERE id_pedido = %s
+            LIMIT 1
+        """, (id_pedido,))
+        pedido = cursor.fetchone()
+        conn.close()
+        return pedido
 
 pedido_db = PedidoModel()

@@ -14,13 +14,18 @@ export class ApiService {
         })
     }
 
-    static async deletarPrato(id) {
-        return await fetch(`${API_URL}/cardapio/${id}`, { method: 'DELETE' })
-    }
+ static async deletarPrato(id, idAdmin) {
+    return await fetch(`${API_URL}/cardapio/${id}?id_admin=${idAdmin}`, { 
+        method: 'DELETE' 
+    });
+}
 
-    static async obterPedidos() {
-        const res = await fetch(`${API_URL}/pedidos`)
-        return await res.json()
+    static async obterPedidos(idUsuario, visaoPainel = false) {
+        const url = visaoPainel
+            ? `${API_URL}/pedidos?id_usuario=${idUsuario}&visao_painel=true`
+            : `${API_URL}/pedidos?id_usuario=${idUsuario}`;
+        const res = await fetch(url);
+        return await res.json();
     }
 
     static async criarPedido(dadospedido) {
@@ -37,8 +42,8 @@ export class ApiService {
     }
 
     static async obterHistorico(idCliente) {
-        const res = await fetch(`${API_URL}/pedidos/cliente/${idCliente}`)
-        return await res.json()
+        const res = await fetch(`${API_URL}/pedidos?id_usuario=${idCliente}`);
+        return await res.json();
     }
 
     static async obterBancada() {
@@ -47,7 +52,7 @@ export class ApiService {
     }
 
     static async agendamentoBancada(dadosAgendamento) {
-        return await fetch(`${API_URL}/bancadas/agendar`, {
+        return await fetch(`${API_URL}/agendamentos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dadosAgendamento)
@@ -55,7 +60,7 @@ export class ApiService {
     }
 
     static async obterAgendamento(idcozinheiro) {
-        const res = await fetch(`${API_URL}/bancadas/agendamentos/${idcozinheiro}`)
+        const res = await fetch(`${API_URL}/agendamentos/funcionario/${idcozinheiro}`)
         return await res.json()
     }
 
@@ -66,6 +71,7 @@ export class ApiService {
             body: JSON.stringify(credenciais)
         })
     }
+
     static async cadastrarUsuario(dadosusuario) {
         return await fetch(`${API_URL}/cadastro`, {
             method: 'POST',
@@ -81,32 +87,34 @@ export class ApiService {
             body: JSON.stringify(dadosfuncionario)
         })
     }
+
     static async atualizarPerfil(dadosPerfil) {
-    return await fetch(`${API_URL}/perfil/editar`, {
-        method: 'POST', // ou PUT
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dadosPerfil)
-    });
-}
+        return await fetch(`${API_URL}/perfil/editar`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosPerfil)
+        });
+    }
 
-static async salvarEndereco(dadosEndereco) {
-    return await fetch(`${API_URL}/endereco`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dadosEndereco)
-    });
-}
+    static async salvarEndereco(dadosEndereco) {
+        return await fetch(`${API_URL}/endereco`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosEndereco)
+        });
+    }
 
-async atualizarStatusPedido(idPedido, status, tempoEstimado = null) {
-    return await fetch(`http://127.0.0.1:5000/api/pedidos/${idPedido}/status`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            status: status, 
-            tempo_estimado: tempoEstimado 
-        })
-    });
-}
+    static async atualizarStatusPedido(idPedido, status, tempoEstimado = null) {
+        return await fetch(`${API_URL}/pedidos/${idPedido}/status`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                status: status,
+                tempo_estimado: tempoEstimado
+            })
+        });
+    }
+
     static async alterarSenha(dadosSenha) {
         return await fetch(`${API_URL}/seguranca/senha`, {
             method: 'PUT',

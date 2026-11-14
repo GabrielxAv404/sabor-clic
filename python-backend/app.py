@@ -8,7 +8,7 @@ from controllers.bancada_controller import bancada_blueprint
 from middlewares import configurar_middlewares
 
 app = Flask(__name__)
-app.secret_key = "sua_chave_secreta_super_segura_e_complexa_aqui"
+app.secret_key = "GostosA0_lindao"
 CORS(app)
 configurar_middlewares(app)
 

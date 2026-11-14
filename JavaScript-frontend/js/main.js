@@ -4,7 +4,92 @@ import { Prato } from "./models/prato.js";
 import { Pedido } from "./models/pedido.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Exibe aviso caso a sessão tenha expirado por inatividade
+
+    const formularioPerfil = document.getElementById('form-editar-perfil');
+
+    if (formularioPerfil) {
+        formularioPerfil.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const usuarioSessao = AuthService.obterSessao();
+            if (!usuarioSessao || !usuarioSessao.id) {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const nomeCompleto = document.getElementById('nome_completo')?.value;
+            const telefone = document.getElementById('telefone')?.value;
+            const email = document.getElementById('email')?.value;
+
+            const dadosPerfil = {
+                id_usuario: usuarioSessao.id,
+                nome_completo: nomeCompleto,
+                telefone: telefone,
+                email: email
+            };
+
+            try {
+                const res = await ApiService.atualizarPerfil(dadosPerfil);
+                const dados = await res.json();
+
+                if (res.ok) {
+                    alert('Perfil atualizado com sucesso!');
+                    AuthService.salvarSessao(usuarioSessao);
+                } else {
+                    alert(dados.erro || 'Erro ao atualizar o perfil.');
+                }
+            } catch (err) {
+                console.error('Erro na atualização de perfil:', err);
+                alert('Falha na comunicação com o servidor backend.');
+            }
+        });
+    }
+    const formularioEndereco = document.getElementById('form-endereco');
+
+    if (formularioEndereco) {
+        formularioEndereco.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const usuarioSessao = AuthService.obterSessao();
+            if (!usuarioSessao || !usuarioSessao.id) {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const cep = document.getElementById('cep')?.value;
+            const rua = document.getElementById('rua')?.value;
+            const numero = document.getElementById('numero')?.value;
+            const bairro = document.getElementById('bairro')?.value;
+            const cidade = document.getElementById('cidade')?.value;
+
+            const dadosEndereco = {
+                id_usuario: usuarioSessao.id,
+                cep: cep,
+                rua: rua,
+                numero: numero,
+                bairro: bairro,
+                cidade: cidade
+            };
+
+            try {
+                const res = await ApiService.salvarEndereco(dadosEndereco);
+                const dados = await res.json();
+
+                if (res.ok) {
+                    alert('Endereço salvo com sucesso!');
+                    formularioEndereco.reset();
+                } else {
+                    alert(dados.erro || 'Erro ao salvar o endereço.');
+                }
+            } catch (err) {
+                console.error('Erro ao salvar endereço:', err);
+                alert('Falha na comunicação com o servidor backend.');
+            }
+        });
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('expirado') === 'true') {
         const divErro = document.getElementById('mensagem_erro');
@@ -21,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarCardapioCliente();
     inicializarPaginaDetalhes();
     carregarPedidosClienteAutomatico();
-    carregarDadosPerfil(); 
+    carregarDadosPerfil();
 
     // Carregamento automático do endereço do usuário na página de edição de endereço
     const formEndereco = document.getElementById('CadEnderecoForm');
@@ -107,13 +192,27 @@ document.addEventListener('DOMContentLoaded', () => {
         formularioAdmin.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const usuarioSessao = AuthService.obterSessao();
+            if (!usuarioSessao || !usuarioSessao.id) {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.html';
+                return;
+            }
+
             const nome = document.getElementById('nome_prato').value;
             const descricao = document.getElementById('descricao_prato').value;
             const preco = document.getElementById('preco_prato').value;
 
             try {
-                const prato = new Prato({ nome, descricao, preco, status: 'DISPONIVEL' });
-                const res = await ApiService.criarPrato(prato.toJSON());
+                const dadosPrato = {
+                    id_admin: usuarioSessao.id,
+                    nome: nome,
+                    descricao: descricao,
+                    preco: preco,
+                    status: 'DISPONIVEL'
+                };
+
+                const res = await ApiService.criarPrato(dadosPrato);
                 if (res.ok) {
                     alert('Prato cadastrado com sucesso!');
                     formularioAdmin.reset();
@@ -130,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-if (formularioFuncionario) {
+    if (formularioFuncionario) {
         formularioFuncionario.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -142,7 +241,7 @@ if (formularioFuncionario) {
             }
 
             const dadosFuncionario = {
-                id_admin: usuarioSessao.id, 
+                id_admin: usuarioSessao.id,
                 username: document.getElementById('username').value,
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value,
@@ -333,7 +432,7 @@ async function carregarCardapioCliente() {
         dados.forEach(item => {
             const prato = new Prato(item);
             const avalDefault = "4.8 ★ (500+ avaliações) • 25-35 min";
-            const imgDefault = "./imagens/prato_destaque.jpg";
+            const imgDefault = "./imagens/prato_destaque.png";
 
             htmlCards += `
                 <article class="card-restaurante card-clicavel" 
@@ -384,8 +483,18 @@ async function carregarKDS() {
     const painelCozinheiro = document.getElementById('painel_cozinheiro');
     if (!painelCozinheiro) return;
 
+    // 1. Obtém a sessão do funcionário logado
+    const usuarioSessao = AuthService.obterSessao();
+    if (!usuarioSessao || !usuarioSessao.id) {
+        painelCozinheiro.innerHTML = '<p>Faça login como funcionário da cozinha ou admin.</p>';
+        return;
+    }
+
     try {
-        const dados = await ApiService.obterPedidos();
+        // 2. Envia o id_usuario e visao_painel=true para o back-end autorizar
+        const resposta = await fetch(`http://127.0.0.1:5000/api/pedidos?id_usuario=${usuarioSessao.id}&visao_painel=true`);
+        const dados = await resposta.json();
+
         painelCozinheiro.innerHTML = '';
 
         if (!Array.isArray(dados) || dados.length === 0) {
@@ -445,10 +554,10 @@ async function carregarOpcoesBancadas() {
 
 function configurarSelecaoCardsPopulares() {
     const cards = document.querySelectorAll('.card-restaurante');
-    
+
     cards.forEach(card => {
         card.style.cursor = 'pointer';
-        
+
         card.addEventListener('click', () => {
             const usuarioSessao = AuthService.obterSessao();
             if (!usuarioSessao) {
@@ -489,10 +598,10 @@ function inicializarPaginaDetalhes() {
         nomeProdutoEl.innerText = nome;
         const descEl = document.getElementById('descricao-produto');
         if (descEl) descEl.innerText = desc || '';
-        
+
         const inputComida = document.getElementById('nome_comida');
         if (inputComida) inputComida.value = nome;
-        
+
         const avalEl = document.getElementById('avaliacao-produto');
         if (avalEl) avalEl.innerText = aval || '';
 
@@ -500,7 +609,7 @@ function inicializarPaginaDetalhes() {
         if (imgEl && img) imgEl.src = img;
 
         const precoUnitario = parseFloat(preco) || 0;
-        
+
         function atualizarPrecoTotal() {
             if (elPreco) elPreco.innerText = `R$ ${(precoUnitario * qtd).toFixed(2)}`;
         }
@@ -533,8 +642,8 @@ function inicializarPaginaDetalhes() {
     if (btnAdicionar) {
         btnAdicionar.addEventListener('click', async () => {
             const usuarioSessao = AuthService.obterSessao();
-            
-            if (!usuarioSessao) {
+
+            if (!usuarioSessao || !usuarioSessao.id) {
                 alert('Você precisa estar logado para fazer um pedido.');
                 window.location.href = 'login.html';
                 return;
@@ -596,7 +705,7 @@ async function carregarPedidosClienteAutomatico() {
         pedidos.forEach(p => {
             const statusClasse = p.status ? p.status.toLowerCase().replace(/\s+/g, '-') : 'aguardando';
             const tempoTexto = p.tempo_estimado_min || p.tempoEstimado ? `${p.tempo_estimado_min || p.tempoEstimado} min` : 'Em análise pela cozinha';
-            
+
             htmlCards += `
                 <article class="card-pedido-cliente" style="background:#111; border:1px solid #A8893F; border-radius:12px; padding:20px; margin-bottom:15px; box-shadow:0 4px 15px rgba(0,0,0,0.5);">
                     <div class="card-pedido-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:12px;">
@@ -618,6 +727,7 @@ async function carregarPedidosClienteAutomatico() {
         console.error('Erro ao carregar pedidos do cliente:', err);
     }
 }
+
 function configurarFormulariosAuth() {
     const formLogin = document.getElementById('LoginForm');
     const formCadastro = document.getElementById('CadastroForm');
@@ -730,11 +840,11 @@ function configurarFormulariosAuth() {
     if (inputTelefone) {
         inputTelefone.addEventListener('input', () => {
             let valor = inputTelefone.value.replace(/\D/g, '');
-            
+
             if (valor.length > 11) {
                 valor = valor.slice(0, 11);
             }
-            
+
             inputTelefone.value = valor;
         });
     }
@@ -747,7 +857,7 @@ async function carregarEdicaoPratos() {
 
     try {
         const pratos = await ApiService.obterCardapio();
-        
+
         function renderizar(lista) {
             if (!lista || lista.length === 0) {
                 container.innerHTML = '<p>Nenhum prato encontrado.</p>';
@@ -775,13 +885,22 @@ async function carregarEdicaoPratos() {
             document.querySelectorAll('.btn-excluir-prato').forEach(btn => {
                 btn.addEventListener('click', async (e) => {
                     const id = e.target.getAttribute('data-id');
+
+                    const usuarioSessao = AuthService.obterSessao();
+                    if (!usuarioSessao || !usuarioSessao.id) {
+                        alert('Sessão expirada. Faça login novamente.');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
                     if (confirm(`Deseja realmente remover o prato #${id}?`)) {
-                        const res = await ApiService.deletarPrato(id);
+                        const res = await ApiService.deletarPrato(id, usuarioSessao.id);
                         if (res.ok) {
                             alert('Prato removido com sucesso!');
                             carregarEdicaoPratos();
                         } else {
-                            alert('Erro ao remover o prato.');
+                            const dados = await res.json();
+                            alert(dados.erro || 'Erro ao remover o prato.');
                         }
                     }
                 });
@@ -846,7 +965,7 @@ async function carregarEdicaoFuncionarios() {
         if (inputBusca) {
             inputBusca.addEventListener('input', (e) => {
                 const termo = e.target.value.toLowerCase();
-                const filtrados = funcionarios.filter(f => 
+                const filtrados = funcionarios.filter(f =>
                     f.username.toLowerCase().includes(termo) || f.cargo.toLowerCase().includes(termo)
                 );
                 renderizar(filtrados);
@@ -875,13 +994,13 @@ async function carregarDadosPerfil() {
 
         document.getElementById('perfil_username').innerText = dados.username || 'Usuário';
         document.getElementById('perfil_email').innerText = dados.email || 'Não informado';
-        
+
         document.getElementById('info_username').innerText = dados.username || '-';
         document.getElementById('info_email').innerText = dados.email || '-';
-        
+
         const telEl = document.getElementById('info_telefone');
         if (telEl) telEl.innerText = dados.telefone || 'Não cadastrado';
-        
+
         const endEl = document.getElementById('info_endereco');
         if (endEl) endEl.innerText = dados.rua || dados.endereco || 'Não cadastrado';
 
@@ -903,17 +1022,28 @@ async function carregarDadosPerfil() {
 }
 
 window.deletarPrato = async (id) => {
+    const usuarioSessao = AuthService.obterSessao();
+    if (!usuarioSessao || !usuarioSessao.id) {
+        alert('Sessão expirada. Faça login novamente.');
+        window.location.href = 'login.html';
+        return;
+    }
+
     if (!confirm('Tem certeza de que deseja excluir este prato?')) return;
+
     try {
-        const res = await ApiService.deletarPrato(id);
+        const res = await ApiService.deletarPrato(id, usuarioSessao.id);
         if (res.ok) {
-            carregarTabelaAdmin();
+            alert('Prato removido com sucesso!');
+            if (typeof carregarTabelaAdmin === 'function') carregarTabelaAdmin();
+            if (typeof carregarEdicaoPratos === 'function') carregarEdicaoPratos();
         } else {
             const dados = await res.json();
             alert(dados.erro || 'Erro ao deletar prato.');
         }
     } catch (err) {
         console.error('Erro ao excluir prato:', err);
+        alert('Falha na comunicação com o servidor backend.');
     }
 };
 
