@@ -1,11 +1,32 @@
 from flask import Blueprint, jsonify, request
 from models.pedido_model import pedido_db
+from database import get_db_connection
 
 pedido_blueprint = Blueprint('pedidos', __name__)
 
+def verificar_permissao_funcionario():
+    id_usuario = request.args.get('id_usuario') or (request.get_json() or {}).get('id_usuario')
+    if not id_usuario:
+        return False
+        
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT cargo FROM usuario WHERE id_usuario = %s", (id_usuario,))
+    usuario = cursor.fetchone()
+    conn.close()
+    
+    return usuario and usuario['cargo'] in ['admin', 'cozinha']
+
 @pedido_blueprint.route('/api/pedidos', methods=['GET'])
 def listar():
-    return jsonify(pedido_db.obter_todos()), 200
+    id_usuario_filtro = request.args.get('id_usuario')
+    
+    if not id_usuario_filtro or request.args.get('visao_painel') == 'true':
+        if not verificar_permissao_funcionario():
+            return jsonify({"erro": "Acesso negado."}), 403
+        return jsonify(pedido_db.obter_todos()), 200
+        
+    return jsonify(pedido_db.obter_por_usuario(id_usuario_filtro)), 200
 
 @pedido_blueprint.route('/api/pedidos/<int:pedido_id>', methods=['GET'])
 def rastrear(pedido_id):
@@ -32,7 +53,6 @@ def atualizar_status(pedido_id):
 
     novo_status = dados.get("status", "EM PREPARO")
     tempo_estimado = dados.get("tempo_estimado", None)
-    
     sucesso, mensagem = pedido_db.atualizar_status(pedido_id, novo_status, tempo_estimado)
     
     if sucesso:

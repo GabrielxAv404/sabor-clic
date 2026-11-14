@@ -96,16 +96,17 @@ static async salvarEndereco(dadosEndereco) {
         body: JSON.stringify(dadosEndereco)
     });
 }
-static async atualizarStatusPedido(idPedido, status, tempoEstimado = null) {
-        return await fetch(`${API_URL}/pedidos/${idPedido}/status`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                status: status, 
-                tempo_estimado_min: tempoEstimado 
-            })
-        });
-    }
+
+async atualizarStatusPedido(idPedido, status, tempoEstimado = null) {
+    return await fetch(`http://127.0.0.1:5000/api/pedidos/${idPedido}/status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            status: status, 
+            tempo_estimado: tempoEstimado 
+        })
+    });
+}
     static async alterarSenha(dadosSenha) {
         return await fetch(`${API_URL}/seguranca/senha`, {
             method: 'PUT',

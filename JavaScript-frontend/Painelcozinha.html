@@ -1,65 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel da Cozinha (KDS) | Sabor & Clic</title>
-  <link rel="stylesheet" href="./css/painelCozinha.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel da Cozinha - Sabor & Clic</title>
+    <link rel="stylesheet" href="../css/painelCozinha.css"> 
 </head>
+
 <body>
- 
-  <header class="topo">
-    <div class="marca">
-      <img class="logo" src="./imagens/logo projeto.png" alt="Logo Sabor & Clic">
-      <span class="nome-marca">SABOR & CLIC</span>
-    </div>
-    <h1>PAINEL DE PEDIDOS (KDS)</h1>
-    <div class="topo-info">
-      <p class="online">Cozinha Conectada</p>
-    </div>
-  </header>
 
-  <section class="agendamento-container">
-    <h2>Agendamento de Bancada</h2>
-    <form id="formulario_agendamento">
-        <div class="campo-grupo">
-            <label for="select_bancada">Bancada:</label>
-            <select id="select_bancada" required>
-                <option value="">Carregando bancadas...</option>
-            </select>
+    <main class="pag-cozinha">
+
+        <header class="cabecalho">
+            <h1>PAINEL DE PEDIDOS (KDS)</h1>
+            <p class="subtitulo">Cozinha Conectada</p>
+        </header>
+
+        <section class="container">
+
+            <div class="titulo-painel">
+                <h2>Fila de Pedidos</h2>
+            </div>
+
+            <div id="painel_cozinheiro" class="painel-cozinheiro-grid">
+                <p>A carregar pedidos da fila...</p>
+            </div>
+
+        </section>
+
+        <div class="voltar" style="text-align: center; margin-top: 20px;">
+            <a href="../admin.html" style="color: #a87920; text-decoration: none; font-weight: bold;">Voltar ao painel administrativo</a>
         </div>
 
-        <div class="campo-grupo">
-            <label for="data_agendamento">Data:</label>
-            <input type="date" id="data_agendamento" required>
-        </div>
+    </main>
 
-        <div class="campo-grupo">
-            <label for="hora_inicio">Hora Início:</label>
-            <input type="time" id="hora_inicio" required>
-        </div>
+    <script type="module" src="../js/main.js"></script>
 
-        <div class="campo-grupo">
-            <label for="hora_fim">Hora Fim:</label>
-            <input type="time" id="hora_fim" required>
-        </div>
-
-        <button type="submit">Agendar Bancada</button>
-    </form>
-  </section>
-
-  
-
-  </main>
-
-  <nav class="menu-inferior">
-    <a href="index.html" class="item-menu ativo"><span>⌂</span><p>Início</p></a>
-    <a href="#pesquisa" class="item-menu"><span>⌕</span><p>Busca</p></a>
-    <a href="painelCozinha.html" class="item-menu"><span>▤</span><p>Cozinha</p></a>
-    <a href="perfil.html" class="item-menu"><span>♙</span><p>Perfil</p></a>
-    <a href="login.html" class="item-menu"><span>⇥</span><p>Sair</p></a>
-  </nav>
-
-  <script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -5,9 +5,12 @@ from controllers.pedido_controller import pedido_blueprint
 from controllers.cardapio_controller import cardapio_blueprint
 from controllers.login_usuario_controller import LoginUsuario_blueprint
 from controllers.bancada_controller import bancada_blueprint
+from middlewares import configurar_middlewares
 
 app = Flask(__name__)
+app.secret_key = "sua_chave_secreta_super_segura_e_complexa_aqui"
 CORS(app)
+configurar_middlewares(app)
 
 
 app.register_blueprint(pedido_blueprint)

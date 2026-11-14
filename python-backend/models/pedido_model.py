@@ -5,7 +5,7 @@ class PedidoModel:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("""
-            SELECT id_pedido AS id, nome_usuario, nome_comida, quantidade, status, tempo_estimado_min
+            SELECT id_pedido AS id, id_usuario, nome_usuario, nome_comida, quantidade, status, tempo_estimado_min
             FROM pedido
             ORDER BY id_pedido DESC
         """)
@@ -13,26 +13,28 @@ class PedidoModel:
         conn.close()
         return pedidos
 
-    def obter_por_id(self, pedido_id):
+    def obter_por_usuario(self, id_usuario):
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("""
-            SELECT id_pedido AS id, nome_usuario, nome_comida, quantidade, status, tempo_estimado_min
+            SELECT id_pedido AS id, id_usuario, nome_usuario, nome_comida, quantidade, status, tempo_estimado_min
             FROM pedido
-            WHERE id_pedido = %s
-        """, (pedido_id,))
-        pedido = cursor.fetchone()
+            WHERE id_usuario = %s
+            ORDER BY id_pedido DESC
+        """, (id_usuario,))
+        pedidos = cursor.fetchall()
         conn.close()
-        return pedido
+        return pedidos
 
     def adicionar(self, novo_pedido):
         conn = get_db_connection()
         cursor = conn.cursor()
         sql = """
-            INSERT INTO pedido (nome_usuario, nome_comida, quantidade, status)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO pedido (id_usuario, nome_usuario, nome_comida, quantidade, status)
+            VALUES (%s, %s, %s, %s, %s)
         """
         cursor.execute(sql, (
+            novo_pedido.get('id_usuario'),
             novo_pedido['nome_usuario'],
             novo_pedido['nome_comida'],
             novo_pedido['quantidade'],
@@ -50,7 +52,6 @@ class PedidoModel:
         cursor = conn.cursor()
 
         if tempo_estimado:
-            # CORREÇÃO AQUI: Utilizar tempo_estimado_min para coincidir com a tabela do MySQL
             sql = "UPDATE pedido SET status = %s, tempo_estimado_min = %s WHERE id_pedido = %s"
             cursor.execute(sql, (novo_status, tempo_estimado, pedido_id))
         else:

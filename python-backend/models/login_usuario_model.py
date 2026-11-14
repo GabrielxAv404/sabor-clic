@@ -47,35 +47,17 @@ class Usuario:
             conn.close()
             return False, f"Erro ao atualizar endereço: {str(err)}"
 
-    def autenticar_usuario(self, email, password):
-        if email == "admin@sushizen.com" and password == "admin123":
-            conn = get_db_connection()
-            cursor = conn.cursor(dictionary=True)
-            cursor.execute("""
-                SELECT u.id_usuario AS id, u.username, u.senha_hash, u.cargo, p.email
-                FROM usuario u
-                LEFT JOIN perfil_usuario p ON u.id_usuario = p.id_usuario
-                WHERE u.username = 'admin'
-            """)
-            usuario = cursor.fetchone()
-            conn.close()
-            if usuario:
-                redirect_map = {
-                    "admin": "admin.html",
-                    "cozinha": "Painelcozinha.html",
-                    "cliente": "index.html"
-                }
-                usuario['redirect'] = redirect_map.get(usuario['cargo'], "index.html")
-                return usuario
-
+    def autenticar_usuario(self, identificador, password):
+        # Autenticação unificada e segura para todos os utilizadores (incluindo admin e funcionários)
+        # Permite autenticar tanto por e-mail quanto por username
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("""
             SELECT u.id_usuario AS id, u.username, u.senha_hash, u.cargo, p.email
             FROM usuario u
             LEFT JOIN perfil_usuario p ON u.id_usuario = p.id_usuario
-            WHERE p.email = %s
-        """, (email,))
+            WHERE p.email = %s OR u.username = %s
+        """, (identificador, identificador))
         usuario = cursor.fetchone()
         conn.close()
 
@@ -122,19 +104,35 @@ class Usuario:
             conn.close()
             return False, f"Erro ao cadastrar usuário: {str(err)}"
 
-    def cadastrar_funcionario(self, username, password, cargo):
+    def cadastrar_funcionario(self, username, email, password, cargo):
         conn = get_db_connection()
         cursor = conn.cursor()
+        
         cursor.execute("SELECT id_usuario FROM usuario WHERE username = %s", (username,))
         if cursor.fetchone():
             conn.close()
-            return False, "Usuário já existe"
+            return False, "Nome de usuário já existe"
         
-        sql = "INSERT INTO usuario (username, senha_hash, cargo) VALUES (%s, %s, %s)"
-        cursor.execute(sql, (username, generate_password_hash(password), cargo))
-        conn.commit()
-        conn.close()
-        return True, f"Funcionário ({cargo}) cadastrado com sucesso"
+        cursor.execute("SELECT id_usuario FROM perfil_usuario WHERE email = %s", (email,))
+        if cursor.fetchone():
+            conn.close()
+            return False, "E-mail já cadastrado"
+
+        try:
+            sql_usuario = "INSERT INTO usuario (username, senha_hash, cargo) VALUES (%s, %s, %s)"
+            cursor.execute(sql_usuario, (username, generate_password_hash(password), cargo))
+            id_usuario = cursor.lastrowid
+
+            sql_perfil = "INSERT INTO perfil_usuario (id_usuario, email) VALUES (%s, %s)"
+            cursor.execute(sql_perfil, (id_usuario, email))
+
+            conn.commit()
+            conn.close()
+            return True, f"Funcionário ({cargo}) cadastrado com sucesso"
+        except Exception as err:
+            conn.rollback()
+            conn.close()
+            return False, f"Erro ao cadastrar funcionário: {str(err)}"
 
     def atualizar_perfil(self, id_usuario, dados):
         conn = get_db_connection()

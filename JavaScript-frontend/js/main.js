@@ -4,12 +4,67 @@ import { Prato } from "./models/prato.js";
 import { Pedido } from "./models/pedido.js";
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Exibe aviso caso a sessão tenha expirado por inatividade
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('expirado') === 'true') {
+        const divErro = document.getElementById('mensagem_erro');
+        if (divErro) {
+            divErro.innerText = 'Sua sessão expirou devido à inatividade. Faça login novamente.';
+            divErro.style.color = 'orange';
+        } else {
+            alert('Sua sessão expirou devido à inatividade. Faça login novamente.');
+        }
+    }
+
     const formRastreio = document.getElementById('formulario_rastreio');
     configurarSelecaoCardsPopulares();
     carregarCardapioCliente();
     inicializarPaginaDetalhes();
     carregarPedidosClienteAutomatico();
     carregarDadosPerfil(); 
+
+    // Carregamento automático do endereço do usuário na página de edição de endereço
+    const formEndereco = document.getElementById('CadEnderecoForm');
+    if (formEndereco) {
+        const usuarioSessao = AuthService.obterSessao();
+        if (usuarioSessao && usuarioSessao.id) {
+            fetch(`http://127.0.0.1:5000/api/perfil/${usuarioSessao.id}`)
+                .then(res => res.json())
+                .then(dados => {
+                    if (dados) {
+                        document.getElementById('cep').value = dados.cep || '';
+                        document.getElementById('rua').value = dados.rua || '';
+                        document.getElementById('bairro').value = dados.bairro || '';
+                        document.getElementById('cidade').value = dados.localidade || dados.cidade || '';
+                        document.getElementById('numero').value = dados.numero || '';
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+
+        formEndereco.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const dados = {
+                cidade: document.getElementById('cidade').value,
+                cep: document.getElementById('cep').value,
+                bairro: document.getElementById('bairro').value,
+                rua: document.getElementById('rua').value,
+                numero: document.getElementById('numero').value
+            };
+            try {
+                const res = await ApiService.salvarEndereco(dados);
+                const resposta = await res.json();
+                if (res.ok) {
+                    alert('Endereço salvo com sucesso!');
+                    window.location.href = 'perfil.html';
+                } else {
+                    alert(resposta.erro || 'Erro ao salvar endereço.');
+                }
+            } catch (err) {
+                console.error('Erro:', err);
+            }
+        });
+    }
 
     if (formRastreio) {
         formRastreio.addEventListener('submit', async (e) => {
@@ -75,12 +130,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (formularioFuncionario) {
+if (formularioFuncionario) {
         formularioFuncionario.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const usuarioSessao = AuthService.obterSessao();
+            if (!usuarioSessao || !usuarioSessao.id) {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.html';
+                return;
+            }
+
             const dadosFuncionario = {
+                id_admin: usuarioSessao.id, 
                 username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
                 password: document.getElementById('password').value,
                 cargo: document.getElementById('cargo').value
             };
@@ -146,8 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
     configurarFormulariosAuth();
 
     const formPerfil = document.getElementById('CadPerfilForm');
-    const formEndereco = document.getElementById('CadEnderecoForm');
-
     if (formPerfil) {
         formPerfil.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -164,31 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.href = 'perfil.html';
                 } else {
                     alert(resposta.erro || 'Erro ao atualizar perfil.');
-                }
-            } catch (err) {
-                console.error('Erro:', err);
-            }
-        });
-    }
-
-    if (formEndereco) {
-        formEndereco.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const dados = {
-                cidade: document.getElementById('cidade').value,
-                cep: document.getElementById('cep').value,
-                bairro: document.getElementById('bairro').value,
-                rua: document.getElementById('rua').value,
-                numero: document.getElementById('numero').value
-            };
-            try {
-                const res = await ApiService.salvarEndereco(dados);
-                const resposta = await res.json();
-                if (res.ok) {
-                    alert('Endereço salvo com sucesso!');
-                    window.location.href = 'perfil.html';
-                } else {
-                    alert(resposta.erro || 'Erro ao salvar endereço.');
                 }
             } catch (err) {
                 console.error('Erro:', err);
@@ -535,8 +572,16 @@ async function carregarPedidosClienteAutomatico() {
     const container = document.getElementById('lista_pedidos_cliente');
     if (!container) return;
 
+    const usuarioSessao = AuthService.obterSessao();
+    if (!usuarioSessao || !usuarioSessao.id) {
+        container.innerHTML = '<p>Faça login para ver os seus pedidos.</p>';
+        return;
+    }
+
     try {
-        const pedidos = await ApiService.obterPedidos();
+        // Busca apenas os pedidos pertencentes ao utilizador logado atualmente
+        const resposta = await fetch(`http://127.0.0.1:5000/api/pedidos?id_usuario=${usuarioSessao.id}`);
+        const pedidos = await resposta.json();
 
         if (!Array.isArray(pedidos) || pedidos.length === 0) {
             container.innerHTML = `
@@ -571,14 +616,8 @@ async function carregarPedidosClienteAutomatico() {
         container.innerHTML = htmlCards;
     } catch (err) {
         console.error('Erro ao carregar pedidos do cliente:', err);
-        container.innerHTML = `
-            <div class="vazio" style="grid-column: 1 / -1; text-align:center; padding:30px;">
-                <h2>Erro de conexão</h2>
-                <p>Não foi possível carregar seus pedidos no momento.</p>
-            </div>`;
     }
 }
-
 function configurarFormulariosAuth() {
     const formLogin = document.getElementById('LoginForm');
     const formCadastro = document.getElementById('CadastroForm');
@@ -610,7 +649,7 @@ function configurarFormulariosAuth() {
         });
     }
 
-if (formCadastro) {
+    if (formCadastro) {
         formCadastro.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -770,7 +809,9 @@ async function carregarEdicaoFuncionarios() {
     if (!container) return;
 
     try {
-        const resposta = await fetch('http://127.0.0.1:5000/api/admin/funcionarios');
+        const usuarioSessao = AuthService.obterSessao();
+        const idAdmin = usuarioSessao ? usuarioSessao.id : '';
+        const resposta = await fetch(`http://127.0.0.1:5000/api/admin/funcionarios?id_admin=${idAdmin}`);
         const funcionarios = await resposta.json();
 
         function renderizar(lista) {
@@ -856,9 +897,7 @@ async function carregarDadosPerfil() {
     if (btnSair) {
         btnSair.addEventListener('click', (e) => {
             e.preventDefault();
-            AuthService.limparSessao();
-            alert('Sessão encerrada!');
-            window.location.href = 'login.html';
+            AuthService.encerrarSessao();
         });
     }
 }
@@ -924,25 +963,5 @@ window.marcarEntregue = async (id) => {
         if (res.ok) carregarKDS();
     } catch (err) {
         console.error('Erro ao finalizar pedido:', err);
-    }
-
-    const formEndereco = document.getElementById('CadEnderecoForm');
-    
-    if (formEndereco) {
-        const usuarioSessao = AuthService.obterSessao();
-        if (usuarioSessao && usuarioSessao.id) {
-            fetch(`http://127.0.0.1:5000/api/perfil/${usuarioSessao.id}`)
-                .then(res => res.json())
-                .then(dados => {
-                    if (dados) {
-                        document.getElementById('cep').value = dados.cep || '';
-                        document.getElementById('rua').value = dados.rua || '';
-                        document.getElementById('bairro').value = dados.bairro || '';
-                        document.getElementById('cidade').value = dados.localidade || dados.cidade || '';
-                        document.getElementById('numero').value = dados.numero || '';
-                    }
-                })
-                .catch(err => console.error(err));
-        }
     }
 };

@@ -15,7 +15,7 @@ CREATE TABLE usuario (
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela de Perfil de Utilizador (E-mail e Telefone)
+
 CREATE TABLE IF NOT EXISTS perfil_usuario (
     id_perfil INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT UNSIGNED NOT NULL,
@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS perfil_usuario (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
 );
 
--- Tabela de Endereços (Com colunas opcionais NULL para evitar erros no cadastro)
 CREATE TABLE IF NOT EXISTS endereco_usuario (
     id_endereco INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT UNSIGNED NOT NULL,
