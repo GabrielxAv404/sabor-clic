@@ -1,0 +1,4 @@
+- No terminal entre na pasta python-backend 
+- execute o comando python app.py, e dixe o servidor do terminal aperto 
+-use a extensão Live Server 
+-aperte com o botão direito do mouse no arquivo "index.html" e aperte na opção  "Open with Live Server"
